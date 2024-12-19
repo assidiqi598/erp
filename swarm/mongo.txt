@@ -1,0 +1,19 @@
+external connection of mongodb = mongodb://<username>:<password>@<host>:<port>/<database>?<options>
+Example Connection String
+Suppose:
+
+Username: root
+Password: example
+Host: your-server-ip
+Port: 27017
+Database: testdb
+The connection string for external access would be:
+
+mongodb://root:example@your-server-ip:27017/testdb
+
+
+Next steps:
+1. Modify firewall 
+2. Modify network (in yml file)
+3. Limit access to specifi ip
+4. Secure MongoDB for external access (mognod.conf, TLS/SSL, .etc)

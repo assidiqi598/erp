@@ -7,6 +7,8 @@ import (
 
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+	"google.golang.org/grpc/status"
 )
 
 type authServer struct {
@@ -22,7 +24,7 @@ func (s *authServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Login
 			Message: "Login successful",
 		}, nil
 	}
-	return nil, grpc.Errorf(401, "Invalid username or password")
+	return nil, status.Errorf(401, "Invalid username or password")
 }
 
 // Implement Register method
@@ -42,6 +44,9 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterAuthServiceServer(grpcServer, &authServer{})
+
+	// Enable gRPC reflection
+	reflection.Register(grpcServer)
 
 	log.Println("Auth Service is running on port 50051")
 	if err := grpcServer.Serve(listener); err != nil {

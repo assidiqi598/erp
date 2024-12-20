@@ -17,15 +17,16 @@ import 'dart:typed_data' as $typed_data;
 const LoginRequest$json = {
   '1': 'LoginRequest',
   '2': [
-    {'1': 'username', '3': 1, '4': 1, '5': 9, '10': 'username'},
+    {'1': 'email', '3': 1, '4': 1, '5': 9, '10': 'email'},
     {'1': 'password', '3': 2, '4': 1, '5': 9, '10': 'password'},
+    {'1': 'wa_number', '3': 3, '4': 1, '5': 9, '10': 'waNumber'},
   ],
 };
 
 /// Descriptor for `LoginRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List loginRequestDescriptor = $convert.base64Decode(
-    'CgxMb2dpblJlcXVlc3QSGgoIdXNlcm5hbWUYASABKAlSCHVzZXJuYW1lEhoKCHBhc3N3b3JkGA'
-    'IgASgJUghwYXNzd29yZA==');
+    'CgxMb2dpblJlcXVlc3QSFAoFZW1haWwYASABKAlSBWVtYWlsEhoKCHBhc3N3b3JkGAIgASgJUg'
+    'hwYXNzd29yZBIbCgl3YV9udW1iZXIYAyABKAlSCHdhTnVtYmVy');
 
 @$core.Deprecated('Use loginResponseDescriptor instead')
 const LoginResponse$json = {
@@ -48,13 +49,15 @@ const RegisterRequest$json = {
     {'1': 'username', '3': 1, '4': 1, '5': 9, '10': 'username'},
     {'1': 'password', '3': 2, '4': 1, '5': 9, '10': 'password'},
     {'1': 'email', '3': 3, '4': 1, '5': 9, '10': 'email'},
+    {'1': 'wa_number', '3': 4, '4': 1, '5': 9, '10': 'waNumber'},
   ],
 };
 
 /// Descriptor for `RegisterRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List registerRequestDescriptor = $convert.base64Decode(
     'Cg9SZWdpc3RlclJlcXVlc3QSGgoIdXNlcm5hbWUYASABKAlSCHVzZXJuYW1lEhoKCHBhc3N3b3'
-    'JkGAIgASgJUghwYXNzd29yZBIUCgVlbWFpbBgDIAEoCVIFZW1haWw=');
+    'JkGAIgASgJUghwYXNzd29yZBIUCgVlbWFpbBgDIAEoCVIFZW1haWwSGwoJd2FfbnVtYmVyGAQg'
+    'ASgJUgh3YU51bWJlcg==');
 
 @$core.Deprecated('Use registerResponseDescriptor instead')
 const RegisterResponse$json = {

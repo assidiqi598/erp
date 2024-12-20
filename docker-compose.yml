@@ -11,6 +11,12 @@ services:
       - mongodb_data:/data/db
     networks:
       - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "echo 'db.runCommand(\"ping\").ok' | mongosh --quiet" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
   auth:
     build:
@@ -19,13 +25,20 @@ services:
     container_name: auth
     environment:
       - AUTH_PORT=${AUTH_PORT}
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=${DB_NAME}
+      - BCRYPT_COST=${BCRYPT_COST}
     volumes:
       - ./services/auth/:/app
       - /app/tmp/
     ports:
       - ${AUTH_PORT}:${AUTH_PORT}
     command: air
-
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network
 
 networks:
   app-network:

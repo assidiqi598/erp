@@ -16,15 +16,19 @@ import 'package:protobuf/protobuf.dart' as $pb;
 /// Messages
 class LoginRequest extends $pb.GeneratedMessage {
   factory LoginRequest({
-    $core.String? username,
+    $core.String? email,
     $core.String? password,
+    $core.String? waNumber,
   }) {
     final $result = create();
-    if (username != null) {
-      $result.username = username;
+    if (email != null) {
+      $result.email = email;
     }
     if (password != null) {
       $result.password = password;
+    }
+    if (waNumber != null) {
+      $result.waNumber = waNumber;
     }
     return $result;
   }
@@ -33,8 +37,9 @@ class LoginRequest extends $pb.GeneratedMessage {
   factory LoginRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'username')
+    ..aOS(1, _omitFieldNames ? '' : 'email')
     ..aOS(2, _omitFieldNames ? '' : 'password')
+    ..aOS(3, _omitFieldNames ? '' : 'waNumber')
     ..hasRequiredFields = false
   ;
 
@@ -60,13 +65,13 @@ class LoginRequest extends $pb.GeneratedMessage {
   static LoginRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get username => $_getSZ(0);
+  $core.String get email => $_getSZ(0);
   @$pb.TagNumber(1)
-  set username($core.String v) { $_setString(0, v); }
+  set email($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasUsername() => $_has(0);
+  $core.bool hasEmail() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUsername() => clearField(1);
+  void clearEmail() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get password => $_getSZ(1);
@@ -76,6 +81,15 @@ class LoginRequest extends $pb.GeneratedMessage {
   $core.bool hasPassword() => $_has(1);
   @$pb.TagNumber(2)
   void clearPassword() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get waNumber => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set waNumber($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasWaNumber() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearWaNumber() => clearField(3);
 }
 
 class LoginResponse extends $pb.GeneratedMessage {
@@ -147,6 +161,7 @@ class RegisterRequest extends $pb.GeneratedMessage {
     $core.String? username,
     $core.String? password,
     $core.String? email,
+    $core.String? waNumber,
   }) {
     final $result = create();
     if (username != null) {
@@ -158,6 +173,9 @@ class RegisterRequest extends $pb.GeneratedMessage {
     if (email != null) {
       $result.email = email;
     }
+    if (waNumber != null) {
+      $result.waNumber = waNumber;
+    }
     return $result;
   }
   RegisterRequest._() : super();
@@ -168,6 +186,7 @@ class RegisterRequest extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'username')
     ..aOS(2, _omitFieldNames ? '' : 'password')
     ..aOS(3, _omitFieldNames ? '' : 'email')
+    ..aOS(4, _omitFieldNames ? '' : 'waNumber')
     ..hasRequiredFields = false
   ;
 
@@ -218,6 +237,15 @@ class RegisterRequest extends $pb.GeneratedMessage {
   $core.bool hasEmail() => $_has(2);
   @$pb.TagNumber(3)
   void clearEmail() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get waNumber => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set waNumber($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWaNumber() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWaNumber() => clearField(4);
 }
 
 class RegisterResponse extends $pb.GeneratedMessage {

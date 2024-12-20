@@ -1,0 +1,12 @@
+# Config file for Air
+[build]
+# Command to build the app
+cmd = "go build -o ./tmp/main ."
+# Binary to run after building
+bin = "./tmp/main"
+
+[log]
+color = "true"
+
+[runner]
+watch_delay = 2000

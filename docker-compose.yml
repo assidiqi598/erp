@@ -12,6 +12,21 @@ services:
     networks:
       - app-network
 
+  auth:
+    build:
+      context: ./services/auth/
+      dockerfile: Dockerfile.dev
+    container_name: auth
+    environment:
+      - AUTH_PORT=${AUTH_PORT}
+    volumes:
+      - ./services/auth/:/app
+      - /app/tmp/
+    ports:
+      - ${AUTH_PORT}:${AUTH_PORT}
+    command: air
+
+
 networks:
   app-network:
     driver: bridge

@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"os"
 
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"google.golang.org/grpc"
@@ -37,7 +38,9 @@ func (s *authServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 }
 
 func main() {
-	listener, err := net.Listen("tcp", ":50051")
+	port := os.Getenv("AUTH_PORT")
+
+	listener, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
@@ -48,7 +51,7 @@ func main() {
 	// Enable gRPC reflection
 	reflection.Register(grpcServer)
 
-	log.Println("Auth Service is running on port 50051")
+	log.Println("Auth Service is running on port" + port)
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}

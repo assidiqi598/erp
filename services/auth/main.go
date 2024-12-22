@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -12,6 +13,7 @@ import (
 	"github.com/assidiqi598/umrah-erp/services/auth/db"
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"github.com/assidiqi598/umrah-erp/services/auth/repositories"
+	"github.com/golang-jwt/jwt/v5"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc"
@@ -24,24 +26,81 @@ type authServer struct {
 	pb.UnimplementedAuthServiceServer
 }
 
+type Claims struct {
+	UserID   string `json:"user_id"`
+	Email    string `json:"email"`
+	WaNumber string `json:"wa_number"`
+	jwt.RegisteredClaims
+}
+
 // Implement Login method
 func (s *authServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
 	repo := repositories.NewUserRepository()
 
-	// Fetch user from MongoDB
-	user, err := repo.FindByEmail(req.Email)
-	if err != nil {
-		log.Printf("User not found: %v", err)
-		return nil, status.Errorf(codes.NotFound, "User not found")
+	var user repositories.User
+
+	if req.Email != "" {
+		// Fetch user from MongoDB
+		user, err := repo.FindByEmail(req.Email)
+		if err != nil {
+			log.Printf("User not found: %v", err)
+			return nil, status.Errorf(codes.NotFound, "User not found")
+		}
+
+		err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password))
+
+		if err != nil {
+			log.Printf("Invalid password for user: %v", user.Email)
+			return nil, status.Errorf(codes.Unauthenticated, "Invalid credentials")
+		}
+
+	} else if req.WaNumber != "" {
+
+		// Fetch user based on whatsapp number
+		// user, err := repo.FindByWaNumber(req.WaNumber)
+		// if err != nil {
+		// 	log.Printf("User not found: %v", err)
+		// 	return nil, status.Errorf(codes.NotFound, "User not found")
+		// }
+
+	} else {
+		return nil, status.Error(codes.Unauthenticated, "Please provide the credentials")
 	}
 
-	// Check password (for simplicity, plaintext comparison is shown)
-	if user.Password != req.Password {
-		return nil, status.Errorf(codes.Unauthenticated, "Invalid credentials")
+	// Generate tokens
+	accessToken, err := generateJWT(user.ID, user.Email, user.WhatsAppNumber, time.Minute*60)
+	if err != nil {
+		log.Printf("Error generating access token: %v", err)
+		return nil, status.Errorf(codes.Internal, "Failed to generate access token")
+	}
+
+	refreshToken, err := generateJWT(user.ID, user.Email, user.WhatsAppNumber, time.Hour*24)
+	if err != nil {
+		log.Printf("Error generating refresh token: %v", err)
+		return nil, status.Errorf(codes.Internal, "Failed to generate refresh token")
 	}
 
 	// Return a successful response
-	return &pb.LoginResponse{Message: "Login successful"}, nil
+	return &pb.LoginResponse{Token: accessToken, Message: "Login successful", RefreshToken: refreshToken}, nil
+}
+
+func generateJWT(userID, email string, waNumber string, duration time.Duration) (string, error) {
+	secretKey := os.Getenv("JWT_SECRET")
+	if secretKey == "" {
+		return "", errors.New("JWT secret key is not configured")
+	}
+
+	claims := &Claims{
+		UserID:   userID,
+		Email:    email,
+		WaNumber: waNumber,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(duration)),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString([]byte(secretKey))
 }
 
 // Implement Register method
@@ -56,6 +115,17 @@ func (s *authServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 
 	if err != mongo.ErrNoDocuments {
 		log.Printf("Error checking email existence: %v", err)
+		return nil, status.Errorf(codes.Internal, "Internal server error")
+	}
+
+	_, err = repo.FindByWaNumber(req.WaNumber)
+
+	if err == nil {
+		return nil, status.Errorf(codes.AlreadyExists, "Whatsapp number already exists")
+	}
+
+	if err != mongo.ErrNoDocuments {
+		log.Printf("Error checking whatsapp number existence: %v", err)
 		return nil, status.Errorf(codes.Internal, "Internal server error")
 	}
 
@@ -125,7 +195,7 @@ func main() {
 	// Enable gRPC reflection
 	reflection.Register(grpcServer)
 
-	log.Println("Auth Service is running on port" + port)
+	log.Println("Auth Service is running on port: " + port)
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}

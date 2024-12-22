@@ -19,6 +19,7 @@ message LoginRequest {
 message LoginResponse {
   string token = 1;
   string message = 2;
+  string refresh_token = 3;
 }
 
 message RegisterRequest {

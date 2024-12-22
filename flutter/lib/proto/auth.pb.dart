@@ -96,6 +96,7 @@ class LoginResponse extends $pb.GeneratedMessage {
   factory LoginResponse({
     $core.String? token,
     $core.String? message,
+    $core.String? refreshToken,
   }) {
     final $result = create();
     if (token != null) {
@@ -103,6 +104,9 @@ class LoginResponse extends $pb.GeneratedMessage {
     }
     if (message != null) {
       $result.message = message;
+    }
+    if (refreshToken != null) {
+      $result.refreshToken = refreshToken;
     }
     return $result;
   }
@@ -113,6 +117,7 @@ class LoginResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'token')
     ..aOS(2, _omitFieldNames ? '' : 'message')
+    ..aOS(3, _omitFieldNames ? '' : 'refreshToken')
     ..hasRequiredFields = false
   ;
 
@@ -154,6 +159,15 @@ class LoginResponse extends $pb.GeneratedMessage {
   $core.bool hasMessage() => $_has(1);
   @$pb.TagNumber(2)
   void clearMessage() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get refreshToken => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set refreshToken($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRefreshToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRefreshToken() => clearField(3);
 }
 
 class RegisterRequest extends $pb.GeneratedMessage {

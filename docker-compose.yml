@@ -28,6 +28,7 @@ services:
       - MONGO_URI=${MONGO_URI}
       - DB_NAME=${DB_NAME}
       - BCRYPT_COST=${BCRYPT_COST}
+      - JWT_SECRET=${JWT_SECRET}
     volumes:
       - ./services/auth/:/app
       - /app/tmp/

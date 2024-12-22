@@ -34,13 +34,14 @@ const LoginResponse$json = {
   '2': [
     {'1': 'token', '3': 1, '4': 1, '5': 9, '10': 'token'},
     {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
+    {'1': 'refresh_token', '3': 3, '4': 1, '5': 9, '10': 'refreshToken'},
   ],
 };
 
 /// Descriptor for `LoginResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List loginResponseDescriptor = $convert.base64Decode(
     'Cg1Mb2dpblJlc3BvbnNlEhQKBXRva2VuGAEgASgJUgV0b2tlbhIYCgdtZXNzYWdlGAIgASgJUg'
-    'dtZXNzYWdl');
+    'dtZXNzYWdlEiMKDXJlZnJlc2hfdG9rZW4YAyABKAlSDHJlZnJlc2hUb2tlbg==');
 
 @$core.Deprecated('Use registerRequestDescriptor instead')
 const RegisterRequest$json = {

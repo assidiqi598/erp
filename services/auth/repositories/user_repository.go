@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"errors"
 	"os"
 	"time"
 
@@ -68,4 +69,18 @@ func (r *UserRepository) CreateUser(user *User) error {
 
 	_, err := r.collection.InsertOne(ctx, user)
 	return err
+}
+
+// UpdateUser updates a user based on filter and update
+func (r *UserRepository) UpdateUser(ctx context.Context, filter bson.M, update bson.M) error {
+	result, err := r.collection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return err
+	}
+
+	if result.MatchedCount == 0 {
+		return errors.New("user not found")
+	}
+
+	return nil
 }

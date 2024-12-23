@@ -14,6 +14,8 @@ import (
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"github.com/assidiqi598/umrah-erp/services/auth/repositories"
 	"github.com/golang-jwt/jwt/v5"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc"
@@ -37,8 +39,6 @@ type Claims struct {
 func (s *authServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
 	repo := repositories.NewUserRepository()
 
-	var user repositories.User
-
 	if req.Email != "" {
 		// Fetch user from MongoDB
 		user, err := repo.FindByEmail(req.Email)
@@ -54,6 +54,41 @@ func (s *authServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Login
 			return nil, status.Errorf(codes.Unauthenticated, "Invalid credentials")
 		}
 
+		// Generate tokens
+		accessToken, err := generateJWT(user.ID, user.Email, user.WhatsAppNumber, time.Minute*60)
+		if err != nil {
+			log.Printf("Error generating access token: %v", err)
+			return nil, status.Errorf(codes.Internal, "Failed to generate access token")
+		}
+
+		refreshToken, err := generateJWT(user.ID, user.Email, user.WhatsAppNumber, time.Hour*24)
+		if err != nil {
+			log.Printf("Error generating refresh token: %v", err)
+			return nil, status.Errorf(codes.Internal, "Failed to generate refresh token")
+		}
+
+		objectID, err := primitive.ObjectIDFromHex(user.ID)
+
+		if err != nil {
+			log.Printf("Error converting id: %v", err)
+		}
+
+		err = repo.UpdateUser(
+			context.Background(),
+			bson.M{"_id": objectID},
+			bson.M{
+				"$set": bson.M{
+					"last_login": time.Now(),
+				},
+			})
+
+		if err != nil {
+			log.Printf("Error updating user: %v", err)
+		}
+
+		// Return a successful response
+		return &pb.LoginResponse{Token: accessToken, Message: "Login successful", RefreshToken: refreshToken}, nil
+
 	} else if req.WaNumber != "" {
 
 		// Fetch user based on whatsapp number
@@ -63,25 +98,9 @@ func (s *authServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Login
 		// 	return nil, status.Errorf(codes.NotFound, "User not found")
 		// }
 
-	} else {
-		return nil, status.Error(codes.Unauthenticated, "Please provide the credentials")
 	}
 
-	// Generate tokens
-	accessToken, err := generateJWT(user.ID, user.Email, user.WhatsAppNumber, time.Minute*60)
-	if err != nil {
-		log.Printf("Error generating access token: %v", err)
-		return nil, status.Errorf(codes.Internal, "Failed to generate access token")
-	}
-
-	refreshToken, err := generateJWT(user.ID, user.Email, user.WhatsAppNumber, time.Hour*24)
-	if err != nil {
-		log.Printf("Error generating refresh token: %v", err)
-		return nil, status.Errorf(codes.Internal, "Failed to generate refresh token")
-	}
-
-	// Return a successful response
-	return &pb.LoginResponse{Token: accessToken, Message: "Login successful", RefreshToken: refreshToken}, nil
+	return nil, status.Error(codes.Unauthenticated, "Please provide the credentials")
 }
 
 func generateJWT(userID, email string, waNumber string, duration time.Duration) (string, error) {

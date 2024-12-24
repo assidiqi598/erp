@@ -21,14 +21,18 @@ export 'auth.pb.dart';
 
 @$pb.GrpcServiceName('auth.AuthService')
 class AuthServiceClient extends $grpc.Client {
-  static final _$login = $grpc.ClientMethod<$0.LoginRequest, $0.LoginResponse>(
+  static final _$login = $grpc.ClientMethod<$0.LoginWithEmailAndPassRequest, $0.LoginResponse>(
       '/auth.AuthService/Login',
-      ($0.LoginRequest value) => value.writeToBuffer(),
+      ($0.LoginWithEmailAndPassRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.LoginResponse.fromBuffer(value));
   static final _$register = $grpc.ClientMethod<$0.RegisterRequest, $0.RegisterResponse>(
       '/auth.AuthService/Register',
       ($0.RegisterRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.RegisterResponse.fromBuffer(value));
+  static final _$verifyEmail = $grpc.ClientMethod<$0.VerifyEmailRequest, $0.VerifyEmailResponse>(
+      '/auth.AuthService/VerifyEmail',
+      ($0.VerifyEmailRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.VerifyEmailResponse.fromBuffer(value));
 
   AuthServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -36,12 +40,16 @@ class AuthServiceClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.LoginResponse> login($0.LoginRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.LoginResponse> login($0.LoginWithEmailAndPassRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$login, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.RegisterResponse> register($0.RegisterRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$register, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.VerifyEmailResponse> verifyEmail($0.VerifyEmailRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$verifyEmail, request, options: options);
   }
 }
 
@@ -50,12 +58,12 @@ abstract class AuthServiceBase extends $grpc.Service {
   $core.String get $name => 'auth.AuthService';
 
   AuthServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.LoginRequest, $0.LoginResponse>(
+    $addMethod($grpc.ServiceMethod<$0.LoginWithEmailAndPassRequest, $0.LoginResponse>(
         'Login',
         login_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.LoginRequest.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.LoginWithEmailAndPassRequest.fromBuffer(value),
         ($0.LoginResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.RegisterRequest, $0.RegisterResponse>(
         'Register',
@@ -64,9 +72,16 @@ abstract class AuthServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.RegisterRequest.fromBuffer(value),
         ($0.RegisterResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.VerifyEmailRequest, $0.VerifyEmailResponse>(
+        'VerifyEmail',
+        verifyEmail_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.VerifyEmailRequest.fromBuffer(value),
+        ($0.VerifyEmailResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.LoginResponse> login_Pre($grpc.ServiceCall call, $async.Future<$0.LoginRequest> request) async {
+  $async.Future<$0.LoginResponse> login_Pre($grpc.ServiceCall call, $async.Future<$0.LoginWithEmailAndPassRequest> request) async {
     return login(call, await request);
   }
 
@@ -74,6 +89,11 @@ abstract class AuthServiceBase extends $grpc.Service {
     return register(call, await request);
   }
 
-  $async.Future<$0.LoginResponse> login($grpc.ServiceCall call, $0.LoginRequest request);
+  $async.Future<$0.VerifyEmailResponse> verifyEmail_Pre($grpc.ServiceCall call, $async.Future<$0.VerifyEmailRequest> request) async {
+    return verifyEmail(call, await request);
+  }
+
+  $async.Future<$0.LoginResponse> login($grpc.ServiceCall call, $0.LoginWithEmailAndPassRequest request);
   $async.Future<$0.RegisterResponse> register($grpc.ServiceCall call, $0.RegisterRequest request);
+  $async.Future<$0.VerifyEmailResponse> verifyEmail($grpc.ServiceCall call, $0.VerifyEmailRequest request);
 }

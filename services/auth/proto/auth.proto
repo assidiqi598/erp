@@ -5,16 +5,28 @@ option go_package = ".";
 
 // Service definition
 service AuthService {
-  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc Login (LoginWithEmailAndPassRequest) returns (LoginResponse);
   rpc Register (RegisterRequest) returns (RegisterResponse);
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
 }
 
 // Messages
-message LoginRequest {
+message LoginWithEmailAndPassRequest {
   string email = 1;
   string password = 2;
-  string wa_number = 3;
 }
+
+// message LoginWithPhoneNumberRequest {
+//   string phone_number = 1;
+// }
+
+// message MatchOTPRequest {
+//   string token = 1;
+// }
+
+// message MatchOTPResponse {
+//   string message = 1;
+// }
 
 message LoginResponse {
   string token = 1;
@@ -26,10 +38,19 @@ message RegisterRequest {
   string username = 1;
   string password = 2;
   string email = 3;
-  string wa_number = 4;
+  string phone_number = 4;
 }
 
 message RegisterResponse {
   string user_id = 1;
   string message = 2;
+}
+
+message VerifyEmailRequest {
+  string email = 1;
+  string token = 2;
+}
+
+message VerifyEmailResponse {
+  string message = 1;
 }

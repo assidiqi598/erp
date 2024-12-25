@@ -1,4 +1,4 @@
-package emailtemplates
+package email_templates
 
 import (
 	"html/template"

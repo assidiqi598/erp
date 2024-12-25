@@ -8,11 +8,13 @@ require (
 	google.golang.org/protobuf v1.36.0
 )
 
-require github.com/golang-jwt/jwt/v5 v5.2.1
+require (
+	github.com/assidiqi598/umrah-erp/shared v0.0.0-20241225085039-fcf4d8068f2d
+	github.com/golang-jwt/jwt/v5 v5.2.1
+)
 
 require (
 	github.com/antihax/optional v1.0.0 // indirect
-	github.com/assidiqi598/umrah-erp/shared v0.0.0-20241225062729-940143f7177f // indirect
 	github.com/getbrevo/brevo-go v1.1.2 // indirect
 	golang.org/x/oauth2 v0.23.0 // indirect
 )

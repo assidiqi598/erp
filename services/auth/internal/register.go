@@ -9,6 +9,7 @@ import (
 
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"github.com/assidiqi598/umrah-erp/services/auth/repositories"
+	utils "github.com/assidiqi598/umrah-erp/shared/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
@@ -57,11 +58,14 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		return nil, status.Errorf(codes.Internal, "Failed to hash password")
 	}
 
+	token := strconv.Itoa(utils.GenerateSecureRandomNumber(6))
+
 	// Insert the user
 	newUser := repositories.User{
 		Username:    req.Username,
 		Email:       req.Email,
 		Password:    string(hashedPassword),
+		Token:       token,
 		PhoneNumber: req.PhoneNumber,
 		CreatedAt:   time.Now(),
 	}

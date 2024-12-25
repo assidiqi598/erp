@@ -1,4 +1,4 @@
-module github.com/assidiqi598/shared
+module github.com/assidiqi598/umrah-erp/shared
 
 go 1.23.4
 

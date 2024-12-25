@@ -29,6 +29,7 @@ services:
       - DB_NAME=${DB_NAME}
       - BCRYPT_COST=${BCRYPT_COST}
       - JWT_SECRET=${JWT_SECRET}
+      - BREVO_API_KEY=${BREVO_API_KEY}
     volumes:
       - ./services/auth/:/app
       - /app/tmp/

@@ -24,6 +24,10 @@ func main() {
 		log.Fatal("BCRYPT_COST is not set")
 	}
 
+	if os.Getenv("BREVO_API_KEY") == "" {
+		log.Fatal("BREVO_API_KEY is not set")
+	}
+
 	// Connect to MongoDB
 	err := db.ConnectMongo(mongoURI)
 	if err != nil {

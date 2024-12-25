@@ -9,7 +9,7 @@ import (
 
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"github.com/assidiqi598/umrah-erp/services/auth/repositories"
-	utils "github.com/assidiqi598/umrah-erp/shared/utils"
+	"github.com/assidiqi598/umrah-erp/shared/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
@@ -69,6 +69,22 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		PhoneNumber: req.PhoneNumber,
 		CreatedAt:   time.Now(),
 	}
+
+	// tmpl := email_templates.GetEmailTemplate()
+
+	// // Create a buffer to store the executed template
+	// var htmlBuffer bytes.Buffer
+
+	// // Execute the template and write to the buffer
+	// err = tmpl.Execute(&htmlBuffer, data)
+	// if err != nil {
+	// 	log.Fatalf("Error rendering template: %v", err)
+	// }
+
+	// // Convert the buffer to a string
+	// emailHTML := htmlBuffer.String()
+
+	// utils.SendEmail(os.Getenv("BREVO_API_KEY"), "do-no-reply@devmore.id", "Devmore", req.Email, req.Username, "Verifikasi Email")
 
 	err = repo.CreateUser(&newUser)
 	if err != nil {

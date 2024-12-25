@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Email Verification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333333;
+        margin: 0;
+        padding: 0;
+      }
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .header {
+        background-color: #4caf50;
+        color: #ffffff;
+        text-align: center;
+        padding: 20px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .content {
+        padding: 20px;
+        text-align: center;
+      }
+      .content p {
+        font-size: 16px;
+        margin: 10px 0;
+      }
+      .token {
+        font-size: 32px;
+        font-weight: bold;
+        color: #4caf50;
+        letter-spacing: 4px;
+        margin: 20px 0;
+      }
+      .footer {
+        background-color: #f1f1f1;
+        color: #666666;
+        font-size: 12px;
+        text-align: center;
+        padding: 10px;
+      }
+      .footer a {
+        color: #4caf50;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="header">
+        <h1>Verifikasi Email Anda</h1>
+      </div>
+      <div class="content">
+        <p>Halo {{ .Username }},</p>
+        <p>
+          Terima kasih telah mendaftar di
+          <strong>Devmore</strong>! Untuk menyelesaikan
+          proses verifikasi, mohon gunakan token berikut:
+        </p>
+        <div class="token">{{ .Token }}</div>
+        <p>
+          Mohon hiraukan email ini jika anda tidak melakukan
+          registrasi.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

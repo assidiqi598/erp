@@ -1,7 +1,5 @@
 github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
-github.com/assidiqi598/umrah-erp/shared v0.0.0-20241225085039-fcf4d8068f2d h1:EupgsfwwAPsjOLzMXHMgiURVUiblC0n3ANb/f5u2FEk=
-github.com/assidiqi598/umrah-erp/shared v0.0.0-20241225085039-fcf4d8068f2d/go.mod h1:k3fvIO+HrfD2QYGuufGYbGeeauc3IKmR5J2ZuO+b6cA=
 github.com/assidiqi598/umrah-erp/shared v0.0.0-20241225095200-71a4a85cea03 h1:b8iUKSVK4ZDj7Lz+sxuyCCUaPK7TisvhauxuizifMR8=
 github.com/assidiqi598/umrah-erp/shared v0.0.0-20241225095200-71a4a85cea03/go.mod h1:k3fvIO+HrfD2QYGuufGYbGeeauc3IKmR5J2ZuO+b6cA=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

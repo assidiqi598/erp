@@ -6,6 +6,7 @@ import (
 )
 
 func GetEmailTemplate(file string) *template.Template {
+	log.Print(file)
 	// Parse the HTML template file
 	tmpl, err := template.ParseFiles(file)
 	if err != nil {

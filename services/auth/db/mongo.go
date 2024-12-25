@@ -52,7 +52,7 @@ func CreateUniqueIndex() error {
 	}
 
 	waIndex := mongo.IndexModel{
-		Keys:    bson.M{"whatsapp_number": 1},
+		Keys:    bson.M{"phone_number": 1},
 		Options: options.Index().SetUnique(true),
 	}
 
@@ -67,11 +67,11 @@ func CreateUniqueIndex() error {
 
 	_, err = usersCollection.Indexes().CreateOne(ctx, waIndex)
 	if err != nil {
-		log.Printf("Failed to create index on whatsapp_number field: %v", err)
+		log.Printf("Failed to create index on phone_number field: %v", err)
 		return err
 	}
 
 	log.Println("Unique index created on email field")
-	log.Println("Unique index created on whatsapp_number field")
+	log.Println("Unique index created on phone_number field")
 	return nil
 }

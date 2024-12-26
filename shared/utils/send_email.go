@@ -37,17 +37,30 @@ func SendEmail(apiKey string, senderEmail string, senderName string, recipientEm
 	ctx := context.Background()
 	resp, httpResp, err := client.TransactionalEmailsApi.SendTransacEmail(ctx, email)
 
-	log.Printf("HTTP Response Status: %v\n", httpResp.Status)
-	log.Printf("Brevo Response: %+v\n", resp)
+	// Log HTTP response status
+	if httpResp != nil {
+		log.Printf("HTTP Response Status: %v\n", httpResp.Status)
+	}
 
 	// Handle errors
 	if err != nil {
-		body, _ := io.ReadAll(httpResp.Body)
-		log.Printf("Error Response Body: %s\n", string(body))
-		return &resp, fmt.Errorf("error sending email: %v", err)
+		if httpResp != nil && httpResp.Body != nil {
+			// Safely read the response body
+			body, readErr := io.ReadAll(httpResp.Body)
+			if readErr == nil {
+				log.Printf("Error Response Body: %s\n", string(body))
+			} else {
+				log.Printf("Error reading response body: %v\n", readErr)
+			}
+		} else {
+			log.Printf("No HTTP response body available.")
+		}
+		log.Printf("Error sending email: %v\n", err)
+		return nil, fmt.Errorf("error sending email: %w", err)
 	}
 
-	log.Printf("Email sent successfully!\n")
+	// Log successful response
+	log.Printf("Email sent successfully!\nBrevo Response: %+v\n", resp)
 
 	return &resp, nil
 }

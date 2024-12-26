@@ -12,15 +12,16 @@ import (
 )
 
 type User struct {
-	ID          string    `bson:"_id,omitempty"`
-	Username    string    `bson:"username"`
-	Password    string    `bson:"password"`
-	Email       string    `bson:"email"`
-	PhoneNumber string    `bson:"phone_number"`
-	IsVerified  bool      `bson:"is_verified"`
-	Token       string    `bson:"token"`
-	LastLogin   time.Time `bson:"last_login"`
-	CreatedAt   time.Time `bson:"created_at"`
+	ID                string    `bson:"_id,omitempty"`
+	Username          string    `bson:"username"`
+	Password          string    `bson:"password"`
+	Email             string    `bson:"email"`
+	PhoneNumber       string    `bson:"phone_number"`
+	IsVerified        bool      `bson:"is_verified"`
+	Token             string    `bson:"token"`
+	VerificationMsgID string    `bson:"verification_msg_id"`
+	LastLogin         time.Time `bson:"last_login"`
+	CreatedAt         time.Time `bson:"created_at"`
 }
 
 // UserRepository provides methods for user-related database operations

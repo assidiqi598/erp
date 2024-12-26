@@ -12,6 +12,8 @@ github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226094947-238799f9c81e h1:FN
 github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226094947-238799f9c81e/go.mod h1:ZtzM/he5fSBsQTaC3AHXlCZQk6qgJ1/UMU/uM+/kiF4=
 github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226095850-b34c694af582 h1:+zAh+GLZAcE+SoL2Sg/nxzxuCnv144vqOIGx3iIrBS8=
 github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226095850-b34c694af582/go.mod h1:ZtzM/he5fSBsQTaC3AHXlCZQk6qgJ1/UMU/uM+/kiF4=
+github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226100645-d1410c36e7cb h1:lGVwo/WjZunuSoWxoopRP83cRvYECKQko1/8oyRaxY8=
+github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226100645-d1410c36e7cb/go.mod h1:ZtzM/he5fSBsQTaC3AHXlCZQk6qgJ1/UMU/uM+/kiF4=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/getbrevo/brevo-go v1.1.2 h1:xvSE2GmJONnRQi1etiZ1YTA7InqVqVnas/Mtpj3VENs=

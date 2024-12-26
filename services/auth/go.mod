@@ -9,7 +9,7 @@ require (
 )
 
 require (
-	github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226095850-b34c694af582
+	github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226100645-d1410c36e7cb
 	github.com/golang-jwt/jwt/v5 v5.2.1
 )
 

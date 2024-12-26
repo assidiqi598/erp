@@ -3,14 +3,13 @@ package utils
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 
 	brevo "github.com/getbrevo/brevo-go/lib"
 )
 
-func SendEmail(apiKey string, senderEmail string, senderName string, recipientEmail string, recipientName string, subject string, textContent string, html string) error {
-
-	fmt.Printf("API Key: %s", apiKey)
+func SendEmail(apiKey string, senderEmail string, senderName string, recipientEmail string, recipientName string, subject string, textContent string, html string) (*brevo.CreateSmtpEmail, error) {
 
 	// Create a new Brevo API client
 	cfg := brevo.NewConfiguration()
@@ -38,15 +37,17 @@ func SendEmail(apiKey string, senderEmail string, senderName string, recipientEm
 	ctx := context.Background()
 	resp, httpResp, err := client.TransactionalEmailsApi.SendTransacEmail(ctx, email)
 
-	log.Printf("HTTP Response Status: %v\n", httpResp)
+	log.Printf("HTTP Response Status: %v\n", httpResp.Status)
 	log.Printf("Brevo Response: %+v\n", resp)
 
 	// Handle errors
 	if err != nil {
-		return fmt.Errorf("error sending email: %v", err)
+		body, _ := io.ReadAll(httpResp.Body)
+		log.Printf("Error Response Body: %s\n", string(body))
+		return &resp, fmt.Errorf("error sending email: %v", err)
 	}
 
 	log.Printf("Email sent successfully!\n")
 
-	return nil
+	return &resp, nil
 }

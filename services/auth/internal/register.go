@@ -85,7 +85,7 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		return nil, status.Errorf(codes.Internal, "Failed to send email verification")
 	}
 
-	newUser.VerificationMsgID = resp.MessageId
+	newUser.VerificationMsgID = resp
 
 	err = repo.CreateUser(&newUser)
 	if err != nil {

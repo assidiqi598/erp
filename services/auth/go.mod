@@ -9,13 +9,13 @@ require (
 )
 
 require (
-	github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226103531-c55eb1ac2eed
+	github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226144344-86055df8bf64
 	github.com/golang-jwt/jwt/v5 v5.2.1
 )
 
 require (
 	github.com/antihax/optional v1.0.0 // indirect
-	github.com/getbrevo/brevo-go v1.1.2 // indirect
+	github.com/sendinblue/APIv3-go-library/v2 v2.1.2 // indirect
 	golang.org/x/oauth2 v0.23.0 // indirect
 )
 

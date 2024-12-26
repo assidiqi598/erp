@@ -10,6 +10,8 @@ import (
 
 func SendEmail(apiKey string, senderEmail string, senderName string, recipientEmail string, recipientName string, subject string, textContent string, html string) error {
 
+	fmt.Printf("API Key: %s", apiKey)
+
 	// Create a new Brevo API client
 	cfg := brevo.NewConfiguration()
 	cfg.AddDefaultHeader("api-key", apiKey)

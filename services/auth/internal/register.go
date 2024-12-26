@@ -8,7 +8,8 @@ import (
 	"time"
 
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
-	"github.com/assidiqi598/umrah-erp/services/auth/repositories"
+	"github.com/assidiqi598/umrah-erp/shared/repositories"
+	"github.com/assidiqi598/umrah-erp/shared/storage"
 	"github.com/assidiqi598/umrah-erp/shared/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -70,9 +71,14 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		CreatedAt:   time.Now(),
 	}
 
-	// tmpl, err := email_templates.GetEmailTemplateAndReplace(os.Getenv("S3_URI") + "email_templates/verifikasi_token.html", newUser)
+	emailHTML, err := storage.GetEmailTemplateAndReplace(os.Getenv("S3_URI")+"email_templates/verifikasi_token.html", newUser)
 
-	// utils.SendEmail(os.Getenv("BREVO_API_KEY"), "do-no-reply@devmore.id", "Devmore", req.Email, req.Username, "Verifikasi Email", emailHTML)
+	if err != nil {
+		log.Printf("Error getting html email content: %v", err)
+		return nil, status.Errorf(codes.Internal, "Failed getting html email content")
+	}
+
+	utils.SendEmail(os.Getenv("BREVO_API_KEY"), "do-no-reply@devmore.id", "Devmore", req.Email, req.Username, "Verifikasi Email", emailHTML)
 
 	err = repo.CreateUser(&newUser)
 	if err != nil {

@@ -15,10 +15,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type AuthServer struct {
-	pb.UnimplementedAuthServiceServer
-}
-
 // Implement Login method
 func (s *AuthServer) LoginWithEmailAndPassword(ctx context.Context, req *pb.LoginWithEmailAndPassRequest) (*pb.LoginResponse, error) {
 	repo := repositories.NewUserRepository()

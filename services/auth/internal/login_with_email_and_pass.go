@@ -7,7 +7,7 @@ import (
 
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	public "github.com/assidiqi598/umrah-erp/services/auth/public"
-	"github.com/assidiqi598/umrah-erp/services/auth/repositories"
+	"github.com/assidiqi598/umrah-erp/shared/repositories"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"

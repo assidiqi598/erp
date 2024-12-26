@@ -30,6 +30,7 @@ services:
       - BCRYPT_COST=${BCRYPT_COST}
       - JWT_SECRET=${JWT_SECRET}
       - BREVO_API_KEY=${BREVO_API_KEY}
+      - S3_URI={S3_URI}
     volumes:
       - ./services/auth/:/app
       - /app/tmp/

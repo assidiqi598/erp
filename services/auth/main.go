@@ -6,9 +6,9 @@ import (
 	"net"
 	"os"
 
-	"github.com/assidiqi598/umrah-erp/services/auth/db"
 	"github.com/assidiqi598/umrah-erp/services/auth/internal"
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
+	"github.com/assidiqi598/umrah-erp/shared/db"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -26,6 +26,10 @@ func main() {
 
 	if os.Getenv("BREVO_API_KEY") == "" {
 		log.Fatal("BREVO_API_KEY is not set")
+	}
+
+	if os.Getenv("S3_URI") == "" {
+		log.Fatal("S3_URI is not set")
 	}
 
 	// Connect to MongoDB

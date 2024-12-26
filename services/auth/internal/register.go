@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"bytes"
 	"context"
 	"log"
 	"os"
@@ -10,7 +9,6 @@ import (
 
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"github.com/assidiqi598/umrah-erp/services/auth/repositories"
-	"github.com/assidiqi598/umrah-erp/shared/email_templates"
 	"github.com/assidiqi598/umrah-erp/shared/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -72,21 +70,9 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		CreatedAt:   time.Now(),
 	}
 
-	tmpl := email_templates.GetEmailTemplate("verifikasi_token.html")
+	// tmpl, err := email_templates.GetEmailTemplateAndReplace(os.Getenv("S3_URI") + "email_templates/verifikasi_token.html", newUser)
 
-	// Create a buffer to store the executed template
-	var htmlBuffer bytes.Buffer
-
-	// Execute the template and write to the buffer
-	err = tmpl.Execute(&htmlBuffer, newUser)
-	if err != nil {
-		log.Fatalf("Error rendering template: %v", err)
-	}
-
-	// Convert the buffer to a string
-	emailHTML := htmlBuffer.String()
-
-	utils.SendEmail(os.Getenv("BREVO_API_KEY"), "do-no-reply@devmore.id", "Devmore", req.Email, req.Username, "Verifikasi Email", emailHTML)
+	// utils.SendEmail(os.Getenv("BREVO_API_KEY"), "do-no-reply@devmore.id", "Devmore", req.Email, req.Username, "Verifikasi Email", emailHTML)
 
 	err = repo.CreateUser(&newUser)
 	if err != nil {

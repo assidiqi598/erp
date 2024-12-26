@@ -1,13 +1,21 @@
-package email_templates
+package storage
 
 import (
 	"bytes"
 	"fmt"
 	"html/template"
 	"net/http"
+	"reflect"
 )
 
-func GetEmailTemplateAndReplace(url string, data struct{}) (string, error) {
+func GetEmailTemplateAndReplace[T any](url string, data T) (string, error) {
+
+	// Ensure the input is a struct
+	if reflect.TypeOf(data).Kind() != reflect.Struct {
+		fmt.Println("data is not a struct")
+		return "", fmt.Errorf("data is not a struct")
+	}
+
 	// Fetch the template from the URL
 	resp, err := http.Get(url)
 	if err != nil {

@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/assidiqi598/umrah-erp/services/auth/db"
+	"github.com/assidiqi598/umrah-erp/shared/db"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )

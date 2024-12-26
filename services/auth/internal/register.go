@@ -78,7 +78,7 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		return nil, status.Errorf(codes.Internal, "Failed getting html email content")
 	}
 
-	err = utils.SendEmail(os.Getenv("BREVO_API_KEY"), "do-no-reply@devmore.id", "Devmore", req.Email, req.Username, "Verifikasi Email", "Berikut merupakan kode verifikasi email Anda", emailHTML)
+	resp, err := utils.SendEmail(os.Getenv("BREVO_API_KEY"), "do-no-reply@devmore.id", "Devmore", req.Email, req.Username, "Verifikasi Email", "Berikut merupakan kode verifikasi email Anda", emailHTML)
 
 	if err != nil {
 		log.Printf("Error sending email verification: %v", err)

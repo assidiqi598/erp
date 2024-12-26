@@ -8,7 +8,7 @@ import (
 	brevo "github.com/getbrevo/brevo-go/lib"
 )
 
-func SendEmail(apiKey string, senderEmail string, senderName string, recipientEmail string, recipientName string, subject string, html string) error {
+func SendEmail(apiKey string, senderEmail string, senderName string, recipientEmail string, recipientName string, subject string, textContent string, html string) error {
 
 	// Create a new Brevo API client
 	cfg := brevo.NewConfiguration()
@@ -28,6 +28,7 @@ func SendEmail(apiKey string, senderEmail string, senderName string, recipientEm
 			},
 		},
 		Subject:     subject,
+		TextContent: textContent,
 		HtmlContent: html,
 	}
 

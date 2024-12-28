@@ -94,6 +94,6 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 	}
 
 	return &pb.RegisterResponse{
-		Message: "User registered successfully",
+		Message: "Anda berhasil terdaftar, mohon verifikasi dengan token yang telah dikirim.",
 	}, nil
 }

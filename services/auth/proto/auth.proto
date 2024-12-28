@@ -5,7 +5,7 @@ option go_package = ".";
 
 // Service definition
 service AuthService {
-  rpc Login (LoginWithEmailAndPassRequest) returns (LoginResponse);
+  rpc LoginWithEmailAndPass (LoginWithEmailAndPassRequest) returns (LoginResponse);
   rpc Register (RegisterRequest) returns (RegisterResponse);
   rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
 }

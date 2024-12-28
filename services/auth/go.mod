@@ -11,12 +11,17 @@ require (
 require (
 	github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226144344-86055df8bf64
 	github.com/golang-jwt/jwt/v5 v5.2.1
+	github.com/joho/godotenv v1.5.1
+	github.com/stretchr/testify v1.10.0
 )
 
 require (
 	github.com/antihax/optional v1.0.0 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sendinblue/APIv3-go-library/v2 v2.1.2 // indirect
 	golang.org/x/oauth2 v0.23.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 require (

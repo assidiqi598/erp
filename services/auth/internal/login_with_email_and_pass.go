@@ -16,7 +16,7 @@ import (
 )
 
 // Implement Login method
-func (s *AuthServer) LoginWithEmailAndPassword(ctx context.Context, req *pb.LoginWithEmailAndPassRequest) (*pb.LoginResponse, error) {
+func (s *AuthServer) LoginWithEmailAndPass(ctx context.Context, req *pb.LoginWithEmailAndPassRequest) (*pb.LoginResponse, error) {
 	repo := repositories.NewUserRepository()
 
 	// Fetch user from MongoDB

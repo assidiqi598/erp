@@ -2,7 +2,6 @@ package test
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -12,7 +11,6 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
@@ -60,7 +58,6 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 	client := pb.NewAuthServiceClient(conn)
 
 	const email = "developmore@yahoo.com"
-	var userId string
 	var emailToken string
 
 	// Test Register
@@ -77,7 +74,6 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		assert.NotNil(t, res)
 		assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon verifikasi dengan token yang telah dikirim.")
 		assert.NotNil(t, res.UserId)
-		userId = res.UserId
 
 		// Check database for new user
 		var user bson.M
@@ -114,7 +110,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		res, err := client.VerifyEmail(context.Background(), req)
 		assert.NoError(t, err)
 		assert.NotNil(t, res)
-		assert.Equal(t, res.Message, "Expected email verification to be successful")
+		assert.Equal(t, res.Message, "Anda berhasil terverifikasi")
 
 		// Optionally check the database for updated verification status
 		var user bson.M
@@ -123,12 +119,18 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		assert.Equal(t, true, user["is_verified"])
 	})
 
-	t.Cleanup(func() {
-		objectID, err := primitive.ObjectIDFromHex(userId)
+	t.Run("Remove Test User", func(t *testing.T) {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
 
+		res, err := usersCollection.DeleteOne(ctx, bson.M{"email": email})
 		if err != nil {
-			fmt.Printf("Error converting id: %v", err)
+			t.Fatalf("Failed to clean up test user: %v", err)
 		}
-		usersCollection.DeleteOne(ctx, bson.M{"_id": objectID})
+
+		log.Printf("Cleaned up test user with email: %s", email)
+
+		assert.Equal(t, 1, int(res.DeletedCount))
+
 	})
 }

@@ -14,7 +14,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/credentials"
 )
 
 func TestMain(m *testing.M) {
@@ -48,8 +48,13 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 
 	usersCollection := mongoClient.Database(os.Getenv("DB_NAME")).Collection("users")
 
+	creds, err := credentials.NewClientTLSFromFile(os.Getenv("CERT_FILE"), "")
+	if err != nil {
+		log.Fatalf("failed to load server certificate: %v", err)
+	}
+
 	// gRPC connection setup
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(creds))
 	if err != nil {
 		t.Fatalf("Failed to connect to AuthService: %v", err)
 	}

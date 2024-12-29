@@ -33,6 +33,8 @@ services:
       - BREVO_SMTP_KEY=${BREVO_SMTP_KEY}
       - BREVO_FROM=${BREVO_FROM}
       - S3_URI=${S3_URI}
+      - CERT_FILE=${CERT_FILE}
+      - KEY_FILE=${KEY_FILE}
     volumes:
       - ./services/auth/:/app
       - /app/tmp/

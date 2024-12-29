@@ -10,6 +10,7 @@ import (
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"github.com/assidiqi598/umrah-erp/shared/db"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -43,12 +44,18 @@ func main() {
 
 	port := os.Getenv("AUTH_PORT")
 
-	listener, err := net.Listen("tcp", ":"+port)
+	listener, err := net.Listen("tcp", "0.0.0.0:"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
 
-	grpcServer := grpc.NewServer()
+	// Load the certificates into credentials
+	creds, err := credentials.NewServerTLSFromFile(os.Getenv("CERT_FILE"), os.Getenv("KEY_FILE"))
+	if err != nil {
+		log.Fatalf("failed to load TLS certificates: %v", err)
+	}
+
+	grpcServer := grpc.NewServer(grpc.Creds(creds))
 	pb.RegisterAuthServiceServer(grpcServer, &internal.AuthServer{})
 
 	// Enable gRPC reflection

@@ -1,20 +1,26 @@
 .PHONY: setup-grpc compose-up test-auth
 
-PROTO_AUTH_SRC_DIR=services/auth/proto
-PROTO_AUTH_OUT_DIR=services/auth/proto
-PROTO_FLUTTER_OUT_DIR=flutter/lib/proto
+AUTH_DIR := ./services/auth/
+FLUTTER_DIR := ./flutter/
+
+CERT_DIR := certs/
+CERT_KEY := $(CERT_DIR)server.key
+CERT_CRT := $(CERT_DIR)server.crt
+
+PROTO_SRC_DIR_AUTH := $(AUTH_DIR)proto/
+PROTO_FLUTTER_OUT_DIR := $(FLUTTER_DIR)lib/proto/
 
 # Command to generate Go and gRPC code
 setup-grpc:
-	protoc \
-		--proto_path=$(PROTO_AUTH_SRC_DIR) \
-		--go_out=$(PROTO_AUTH_SRC_DIR) \
-		--go-grpc_out=$(PROTO_AUTH_SRC_DIR) \
-		$(PROTO_AUTH_SRC_DIR)/auth.proto && \
-	protoc \
-		--proto_path=$(PROTO_AUTH_SRC_DIR) \
+	@protoc \
+		--proto_path=$(PROTO_SRC_DIR_AUTH) \
+		--go_out=$(PROTO_SRC_DIR_AUTH) \
+		--go-grpc_out=$(PROTO_SRC_DIR_AUTH) \
+		$(PROTO_SRC_DIR_AUTH)/auth.proto
+	@protoc \
+		--proto_path=$(PROTO_SRC_DIR_AUTH) \
 		--dart_out=grpc:$(PROTO_FLUTTER_OUT_DIR) \
-		$(PROTO_AUTH_SRC_DIR)/auth.proto
+		$(PROTO_SRC_DIR_AUTH)/auth.proto
 
 compose_up:
 	@if ! docker ps | grep -q "auth"; then \
@@ -24,12 +30,31 @@ compose_up:
 		echo "Containers are already running."; \
 	fi
 
-check_health: compose_up
-	@until grpcurl -plaintext localhost:50051 list > /dev/null 2>&1; do \
+compose_down:
+	@docker compose down
+
+# Target to create the certificates
+generate_cert_auth:
+	@if [ -f $(AUTH_DIR)$(CERT_CRT) ]; then \
+		echo "Certificate already exists at $(AUTH_DIR)$(CERT_CRT). Skipping generation."; \
+	else \
+		mkdir -p $(AUTH_DIR)$(CERT_DIR); \
+		echo "Generating self-signed TLS certificate..."; \
+		openssl req -new -newkey rsa:2048 -nodes -keyout $(AUTH_DIR)$(CERT_KEY) -out $(AUTH_DIR)$(CERT_DIR)/server.csr -subj "/CN=localhost"; \
+		echo "subjectAltName=DNS:localhost,IP:127.0.0.1" > $(AUTH_DIR)$(CERT_DIR)san.ext; \
+		openssl x509 -req -in $(AUTH_DIR)$(CERT_DIR)server.csr -signkey $(AUTH_DIR)$(CERT_KEY) -out $(AUTH_DIR)$(CERT_CRT) -days 365 \
+			-extfile $(AUTH_DIR)$(CERT_DIR)san.ext; \
+		rm $(AUTH_DIR)$(CERT_DIR)san.ext; \
+		echo "Certificate and key generated at $(AUTH_DIR)$(CERT_DIR)"; \
+	fi
+
+# Target to check health of the gRPC server
+check_health_auth: generate_cert_auth compose_up
+	@until grpcurl -v -cacert $(AUTH_DIR)$(CERT_CRT) -d '' localhost:50051 list > /dev/null 2>&1; do \
 		echo "Waiting for gRPC server..."; \
 		sleep 2; \
 	done
 	@echo "gRPC server is ready."
 
-test_auth: check_health
+test_auth: check_health_auth
 	cd services/auth && go test ./test/... -v

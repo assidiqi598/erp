@@ -35,7 +35,7 @@ func (s *AuthServer) VerifyEmail(ctx context.Context, req *pb.VerifyEmailRequest
 		return nil, status.Errorf(codes.NotFound, "User not found")
 	}
 
-	if user.Token != req.EmailToken {
+	if user.EmailToken != req.EmailToken {
 		log.Printf("Token for user %s not match", user.ID)
 		return &pb.VerifyEmailResponse{Message: "Token salah"}, nil
 	}

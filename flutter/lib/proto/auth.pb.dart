@@ -512,21 +512,139 @@ class ResendVerificationEmailResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 }
 
-class ChangePasswordRequest extends $pb.GeneratedMessage {
-  factory ChangePasswordRequest({
-    $core.String? oldPassword,
-    $core.String? newPassword,
-    $core.String? reserved,
+class RequestToChangePasswordRequest extends $pb.GeneratedMessage {
+  factory RequestToChangePasswordRequest({
+    $core.String? email,
+    $core.String? phoneNumber,
   }) {
     final $result = create();
-    if (oldPassword != null) {
-      $result.oldPassword = oldPassword;
+    if (email != null) {
+      $result.email = email;
+    }
+    if (phoneNumber != null) {
+      $result.phoneNumber = phoneNumber;
+    }
+    return $result;
+  }
+  RequestToChangePasswordRequest._() : super();
+  factory RequestToChangePasswordRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RequestToChangePasswordRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RequestToChangePasswordRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'email')
+    ..aOS(2, _omitFieldNames ? '' : 'phoneNumber')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RequestToChangePasswordRequest clone() => RequestToChangePasswordRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RequestToChangePasswordRequest copyWith(void Function(RequestToChangePasswordRequest) updates) => super.copyWith((message) => updates(message as RequestToChangePasswordRequest)) as RequestToChangePasswordRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RequestToChangePasswordRequest create() => RequestToChangePasswordRequest._();
+  RequestToChangePasswordRequest createEmptyInstance() => create();
+  static $pb.PbList<RequestToChangePasswordRequest> createRepeated() => $pb.PbList<RequestToChangePasswordRequest>();
+  @$core.pragma('dart2js:noInline')
+  static RequestToChangePasswordRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RequestToChangePasswordRequest>(create);
+  static RequestToChangePasswordRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get email => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set email($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEmail() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEmail() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get phoneNumber => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set phoneNumber($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPhoneNumber() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPhoneNumber() => clearField(2);
+}
+
+class RequestToChangePasswordResponse extends $pb.GeneratedMessage {
+  factory RequestToChangePasswordResponse({
+    $core.String? message,
+  }) {
+    final $result = create();
+    if (message != null) {
+      $result.message = message;
+    }
+    return $result;
+  }
+  RequestToChangePasswordResponse._() : super();
+  factory RequestToChangePasswordResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RequestToChangePasswordResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RequestToChangePasswordResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RequestToChangePasswordResponse clone() => RequestToChangePasswordResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RequestToChangePasswordResponse copyWith(void Function(RequestToChangePasswordResponse) updates) => super.copyWith((message) => updates(message as RequestToChangePasswordResponse)) as RequestToChangePasswordResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RequestToChangePasswordResponse create() => RequestToChangePasswordResponse._();
+  RequestToChangePasswordResponse createEmptyInstance() => create();
+  static $pb.PbList<RequestToChangePasswordResponse> createRepeated() => $pb.PbList<RequestToChangePasswordResponse>();
+  @$core.pragma('dart2js:noInline')
+  static RequestToChangePasswordResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RequestToChangePasswordResponse>(create);
+  static RequestToChangePasswordResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get message => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set message($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMessage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMessage() => clearField(1);
+}
+
+class ChangePasswordRequest extends $pb.GeneratedMessage {
+  factory ChangePasswordRequest({
+    $core.String? givenPassword,
+    $core.String? newPassword,
+    $core.String? email,
+    $core.String? phoneNumber,
+  }) {
+    final $result = create();
+    if (givenPassword != null) {
+      $result.givenPassword = givenPassword;
     }
     if (newPassword != null) {
       $result.newPassword = newPassword;
     }
-    if (reserved != null) {
-      $result.reserved = reserved;
+    if (email != null) {
+      $result.email = email;
+    }
+    if (phoneNumber != null) {
+      $result.phoneNumber = phoneNumber;
     }
     return $result;
   }
@@ -535,9 +653,10 @@ class ChangePasswordRequest extends $pb.GeneratedMessage {
   factory ChangePasswordRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChangePasswordRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'oldPassword')
+    ..aOS(1, _omitFieldNames ? '' : 'givenPassword')
     ..aOS(2, _omitFieldNames ? '' : 'newPassword')
-    ..aOS(3, _omitFieldNames ? '' : 'reserved')
+    ..aOS(3, _omitFieldNames ? '' : 'email')
+    ..aOS(4, _omitFieldNames ? '' : 'phoneNumber')
     ..hasRequiredFields = false
   ;
 
@@ -563,13 +682,13 @@ class ChangePasswordRequest extends $pb.GeneratedMessage {
   static ChangePasswordRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get oldPassword => $_getSZ(0);
+  $core.String get givenPassword => $_getSZ(0);
   @$pb.TagNumber(1)
-  set oldPassword($core.String v) { $_setString(0, v); }
+  set givenPassword($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasOldPassword() => $_has(0);
+  $core.bool hasGivenPassword() => $_has(0);
   @$pb.TagNumber(1)
-  void clearOldPassword() => clearField(1);
+  void clearGivenPassword() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get newPassword => $_getSZ(1);
@@ -581,13 +700,22 @@ class ChangePasswordRequest extends $pb.GeneratedMessage {
   void clearNewPassword() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get reserved => $_getSZ(2);
+  $core.String get email => $_getSZ(2);
   @$pb.TagNumber(3)
-  set reserved($core.String v) { $_setString(2, v); }
+  set email($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasReserved() => $_has(2);
+  $core.bool hasEmail() => $_has(2);
   @$pb.TagNumber(3)
-  void clearReserved() => clearField(3);
+  void clearEmail() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get phoneNumber => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set phoneNumber($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPhoneNumber() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPhoneNumber() => clearField(4);
 }
 
 class ChangePasswordResponse extends $pb.GeneratedMessage {

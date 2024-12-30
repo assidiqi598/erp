@@ -23,6 +23,7 @@ const (
 	AuthService_Register_FullMethodName                = "/auth.AuthService/Register"
 	AuthService_VerifyEmail_FullMethodName             = "/auth.AuthService/VerifyEmail"
 	AuthService_ResendVerificationEmail_FullMethodName = "/auth.AuthService/ResendVerificationEmail"
+	AuthService_RequestToChangePassword_FullMethodName = "/auth.AuthService/RequestToChangePassword"
 	AuthService_ChangePassword_FullMethodName          = "/auth.AuthService/ChangePassword"
 	AuthService_ChangeEmail_FullMethodName             = "/auth.AuthService/ChangeEmail"
 )
@@ -37,6 +38,7 @@ type AuthServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*VerifyEmailResponse, error)
 	ResendVerificationEmail(ctx context.Context, in *ResendVerificationEmailRequest, opts ...grpc.CallOption) (*ResendVerificationEmailResponse, error)
+	RequestToChangePassword(ctx context.Context, in *RequestToChangePasswordRequest, opts ...grpc.CallOption) (*RequestToChangePasswordResponse, error)
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error)
 	ChangeEmail(ctx context.Context, in *ChangeEmailRequest, opts ...grpc.CallOption) (*ChangeEmailResponse, error)
 }
@@ -89,6 +91,16 @@ func (c *authServiceClient) ResendVerificationEmail(ctx context.Context, in *Res
 	return out, nil
 }
 
+func (c *authServiceClient) RequestToChangePassword(ctx context.Context, in *RequestToChangePasswordRequest, opts ...grpc.CallOption) (*RequestToChangePasswordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RequestToChangePasswordResponse)
+	err := c.cc.Invoke(ctx, AuthService_RequestToChangePassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *authServiceClient) ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ChangePasswordResponse)
@@ -119,6 +131,7 @@ type AuthServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	VerifyEmail(context.Context, *VerifyEmailRequest) (*VerifyEmailResponse, error)
 	ResendVerificationEmail(context.Context, *ResendVerificationEmailRequest) (*ResendVerificationEmailResponse, error)
+	RequestToChangePassword(context.Context, *RequestToChangePasswordRequest) (*RequestToChangePasswordResponse, error)
 	ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error)
 	ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
@@ -142,6 +155,9 @@ func (UnimplementedAuthServiceServer) VerifyEmail(context.Context, *VerifyEmailR
 }
 func (UnimplementedAuthServiceServer) ResendVerificationEmail(context.Context, *ResendVerificationEmailRequest) (*ResendVerificationEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResendVerificationEmail not implemented")
+}
+func (UnimplementedAuthServiceServer) RequestToChangePassword(context.Context, *RequestToChangePasswordRequest) (*RequestToChangePasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RequestToChangePassword not implemented")
 }
 func (UnimplementedAuthServiceServer) ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangePassword not implemented")
@@ -242,6 +258,24 @@ func _AuthService_ResendVerificationEmail_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_RequestToChangePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestToChangePasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).RequestToChangePassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_RequestToChangePassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).RequestToChangePassword(ctx, req.(*RequestToChangePasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AuthService_ChangePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ChangePasswordRequest)
 	if err := dec(in); err != nil {
@@ -300,6 +334,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ResendVerificationEmail",
 			Handler:    _AuthService_ResendVerificationEmail_Handler,
+		},
+		{
+			MethodName: "RequestToChangePassword",
+			Handler:    _AuthService_RequestToChangePassword_Handler,
 		},
 		{
 			MethodName: "ChangePassword",

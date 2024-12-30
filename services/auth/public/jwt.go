@@ -49,8 +49,10 @@ func JwtAuthInterceptor(
 ) (interface{}, error) {
 	// List of methods that do not require authentication
 	publicMethods := map[string]bool{
-		"/auth.AuthService/Register":              true,
-		"/auth.AuthService/LoginWithEmailAndPass": true,
+		"/auth.AuthService/Register":                true,
+		"/auth.AuthService/LoginWithEmailAndPass":   true,
+		"/auth.AuthService/RequestToChangePassword": true,
+		"/auth.AuthService/ChangePasswordRequest":   true,
 	}
 
 	// Check if the current method is public

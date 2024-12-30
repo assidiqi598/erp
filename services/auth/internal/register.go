@@ -66,7 +66,7 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		Username:    req.Username,
 		Email:       req.Email,
 		Password:    string(hashedPassword),
-		Token:       token,
+		EmailToken:  token,
 		PhoneNumber: req.PhoneNumber,
 		CreatedAt:   time.Now(),
 	}

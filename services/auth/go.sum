@@ -4,6 +4,8 @@ github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226144344-86055df8bf64 h1:8Z
 github.com/assidiqi598/umrah-erp/shared v0.0.0-20241226144344-86055df8bf64/go.mod h1:RX54uJYnVcYSfa8rCruXecjjViphmZWbX+vBekeajvA=
 github.com/assidiqi598/umrah-erp/shared v0.0.0-20241229104238-7cd3fcb2653a h1:hKLZpfw7zVBhLbs0/fnyAbU7tHiMCRUihTunrS6p0TE=
 github.com/assidiqi598/umrah-erp/shared v0.0.0-20241229104238-7cd3fcb2653a/go.mod h1:RX54uJYnVcYSfa8rCruXecjjViphmZWbX+vBekeajvA=
+github.com/assidiqi598/umrah-erp/shared v0.0.0-20241230102704-4ee24634d624 h1:6tnfgAmbrQbpkGtt+wSwv3rg2B28uCO+DjCHP8pl3Jk=
+github.com/assidiqi598/umrah-erp/shared v0.0.0-20241230102704-4ee24634d624/go.mod h1:RX54uJYnVcYSfa8rCruXecjjViphmZWbX+vBekeajvA=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-logr/logr v1.4.2 h1:6pFjapn8bFcIbiKo3XT4j/BhANplGihG6tvd+8rYgrY=

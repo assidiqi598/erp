@@ -123,21 +123,49 @@ final $typed_data.Uint8List resendVerificationEmailResponseDescriptor = $convert
     'Ch9SZXNlbmRWZXJpZmljYXRpb25FbWFpbFJlc3BvbnNlEhgKB21lc3NhZ2UYASABKAlSB21lc3'
     'NhZ2U=');
 
+@$core.Deprecated('Use requestToChangePasswordRequestDescriptor instead')
+const RequestToChangePasswordRequest$json = {
+  '1': 'RequestToChangePasswordRequest',
+  '2': [
+    {'1': 'email', '3': 1, '4': 1, '5': 9, '10': 'email'},
+    {'1': 'phone_number', '3': 2, '4': 1, '5': 9, '10': 'phoneNumber'},
+  ],
+};
+
+/// Descriptor for `RequestToChangePasswordRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List requestToChangePasswordRequestDescriptor = $convert.base64Decode(
+    'Ch5SZXF1ZXN0VG9DaGFuZ2VQYXNzd29yZFJlcXVlc3QSFAoFZW1haWwYASABKAlSBWVtYWlsEi'
+    'EKDHBob25lX251bWJlchgCIAEoCVILcGhvbmVOdW1iZXI=');
+
+@$core.Deprecated('Use requestToChangePasswordResponseDescriptor instead')
+const RequestToChangePasswordResponse$json = {
+  '1': 'RequestToChangePasswordResponse',
+  '2': [
+    {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `RequestToChangePasswordResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List requestToChangePasswordResponseDescriptor = $convert.base64Decode(
+    'Ch9SZXF1ZXN0VG9DaGFuZ2VQYXNzd29yZFJlc3BvbnNlEhgKB21lc3NhZ2UYASABKAlSB21lc3'
+    'NhZ2U=');
+
 @$core.Deprecated('Use changePasswordRequestDescriptor instead')
 const ChangePasswordRequest$json = {
   '1': 'ChangePasswordRequest',
   '2': [
-    {'1': 'old_password', '3': 1, '4': 1, '5': 9, '10': 'oldPassword'},
+    {'1': 'given_password', '3': 1, '4': 1, '5': 9, '10': 'givenPassword'},
     {'1': 'new_password', '3': 2, '4': 1, '5': 9, '10': 'newPassword'},
-    {'1': 'reserved', '3': 3, '4': 1, '5': 9, '10': 'reserved'},
+    {'1': 'email', '3': 3, '4': 1, '5': 9, '10': 'email'},
+    {'1': 'phone_number', '3': 4, '4': 1, '5': 9, '10': 'phoneNumber'},
   ],
 };
 
 /// Descriptor for `ChangePasswordRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List changePasswordRequestDescriptor = $convert.base64Decode(
-    'ChVDaGFuZ2VQYXNzd29yZFJlcXVlc3QSIQoMb2xkX3Bhc3N3b3JkGAEgASgJUgtvbGRQYXNzd2'
-    '9yZBIhCgxuZXdfcGFzc3dvcmQYAiABKAlSC25ld1Bhc3N3b3JkEhoKCHJlc2VydmVkGAMgASgJ'
-    'UghyZXNlcnZlZA==');
+    'ChVDaGFuZ2VQYXNzd29yZFJlcXVlc3QSJQoOZ2l2ZW5fcGFzc3dvcmQYASABKAlSDWdpdmVuUG'
+    'Fzc3dvcmQSIQoMbmV3X3Bhc3N3b3JkGAIgASgJUgtuZXdQYXNzd29yZBIUCgVlbWFpbBgDIAEo'
+    'CVIFZW1haWwSIQoMcGhvbmVfbnVtYmVyGAQgASgJUgtwaG9uZU51bWJlcg==');
 
 @$core.Deprecated('Use changePasswordResponseDescriptor instead')
 const ChangePasswordResponse$json = {

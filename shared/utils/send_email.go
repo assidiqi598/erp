@@ -7,7 +7,16 @@ import (
 	sib_api_v3_sdk "github.com/sendinblue/APIv3-go-library/v2/lib"
 )
 
-func SendEmail(apiKey string, senderEmail string, senderName string, recipientEmail string, recipientName string, subject string, textContent string, html string) (string, error) {
+func SendEmail(
+	apiKey string,
+	senderEmail string,
+	senderName string,
+	recipientEmail string,
+	recipientName string,
+	subject string,
+	textContent string,
+	html string,
+) (string, error) {
 	var ctx context.Context
 
 	cfg := sib_api_v3_sdk.NewConfiguration()

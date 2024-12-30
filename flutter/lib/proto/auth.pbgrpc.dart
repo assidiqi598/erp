@@ -33,6 +33,18 @@ class AuthServiceClient extends $grpc.Client {
       '/auth.AuthService/VerifyEmail',
       ($0.VerifyEmailRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.VerifyEmailResponse.fromBuffer(value));
+  static final _$resendVerificationEmail = $grpc.ClientMethod<$0.ResendVerificationEmailRequest, $0.ResendVerificationEmailResponse>(
+      '/auth.AuthService/ResendVerificationEmail',
+      ($0.ResendVerificationEmailRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ResendVerificationEmailResponse.fromBuffer(value));
+  static final _$changePassword = $grpc.ClientMethod<$0.ChangePasswordRequest, $0.ChangePasswordResponse>(
+      '/auth.AuthService/ChangePassword',
+      ($0.ChangePasswordRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ChangePasswordResponse.fromBuffer(value));
+  static final _$changeEmail = $grpc.ClientMethod<$0.ChangeEmailRequest, $0.ChangeEmailResponse>(
+      '/auth.AuthService/ChangeEmail',
+      ($0.ChangeEmailRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ChangeEmailResponse.fromBuffer(value));
 
   AuthServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -50,6 +62,18 @@ class AuthServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.VerifyEmailResponse> verifyEmail($0.VerifyEmailRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$verifyEmail, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ResendVerificationEmailResponse> resendVerificationEmail($0.ResendVerificationEmailRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$resendVerificationEmail, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ChangePasswordResponse> changePassword($0.ChangePasswordRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$changePassword, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ChangeEmailResponse> changeEmail($0.ChangeEmailRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$changeEmail, request, options: options);
   }
 }
 
@@ -79,6 +103,27 @@ abstract class AuthServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.VerifyEmailRequest.fromBuffer(value),
         ($0.VerifyEmailResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ResendVerificationEmailRequest, $0.ResendVerificationEmailResponse>(
+        'ResendVerificationEmail',
+        resendVerificationEmail_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.ResendVerificationEmailRequest.fromBuffer(value),
+        ($0.ResendVerificationEmailResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ChangePasswordRequest, $0.ChangePasswordResponse>(
+        'ChangePassword',
+        changePassword_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.ChangePasswordRequest.fromBuffer(value),
+        ($0.ChangePasswordResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ChangeEmailRequest, $0.ChangeEmailResponse>(
+        'ChangeEmail',
+        changeEmail_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.ChangeEmailRequest.fromBuffer(value),
+        ($0.ChangeEmailResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.LoginResponse> loginWithEmailAndPass_Pre($grpc.ServiceCall call, $async.Future<$0.LoginWithEmailAndPassRequest> request) async {
@@ -93,7 +138,22 @@ abstract class AuthServiceBase extends $grpc.Service {
     return verifyEmail(call, await request);
   }
 
+  $async.Future<$0.ResendVerificationEmailResponse> resendVerificationEmail_Pre($grpc.ServiceCall call, $async.Future<$0.ResendVerificationEmailRequest> request) async {
+    return resendVerificationEmail(call, await request);
+  }
+
+  $async.Future<$0.ChangePasswordResponse> changePassword_Pre($grpc.ServiceCall call, $async.Future<$0.ChangePasswordRequest> request) async {
+    return changePassword(call, await request);
+  }
+
+  $async.Future<$0.ChangeEmailResponse> changeEmail_Pre($grpc.ServiceCall call, $async.Future<$0.ChangeEmailRequest> request) async {
+    return changeEmail(call, await request);
+  }
+
   $async.Future<$0.LoginResponse> loginWithEmailAndPass($grpc.ServiceCall call, $0.LoginWithEmailAndPassRequest request);
   $async.Future<$0.RegisterResponse> register($grpc.ServiceCall call, $0.RegisterRequest request);
   $async.Future<$0.VerifyEmailResponse> verifyEmail($grpc.ServiceCall call, $0.VerifyEmailRequest request);
+  $async.Future<$0.ResendVerificationEmailResponse> resendVerificationEmail($grpc.ServiceCall call, $0.ResendVerificationEmailRequest request);
+  $async.Future<$0.ChangePasswordResponse> changePassword($grpc.ServiceCall call, $0.ChangePasswordRequest request);
+  $async.Future<$0.ChangeEmailResponse> changeEmail($grpc.ServiceCall call, $0.ChangeEmailRequest request);
 }

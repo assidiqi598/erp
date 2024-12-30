@@ -8,6 +8,9 @@ service AuthService {
   rpc LoginWithEmailAndPass (LoginWithEmailAndPassRequest) returns (LoginResponse);
   rpc Register (RegisterRequest) returns (RegisterResponse);
   rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
+  rpc ResendVerificationEmail(ResendVerificationEmailRequest) returns (ResendVerificationEmailResponse);
+  rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc ChangeEmail (ChangeEmailRequest) returns (ChangeEmailResponse);
 }
 
 // Messages
@@ -47,10 +50,37 @@ message RegisterResponse {
 }
 
 message VerifyEmailRequest {
-  string email = 1;
-  string token = 2;
+  string email_token = 1;
 }
 
 message VerifyEmailResponse {
+  string message = 1;
+}
+
+message ResendVerificationEmailRequest {
+  string reserved = 1;
+}
+
+message ResendVerificationEmailResponse {
+  string message = 1;
+}
+
+message ChangePasswordRequest {
+  string old_password = 1;
+  string new_password = 2;
+  string reserved = 3;
+}
+
+message ChangePasswordResponse {
+  string message = 1;
+}
+
+message ChangeEmailRequest {
+  string old_email = 1;
+  string new_email = 2;
+  string password = 3;
+}
+
+message ChangeEmailResponse {
   string message = 1;
 }

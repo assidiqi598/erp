@@ -77,15 +77,13 @@ final $typed_data.Uint8List registerResponseDescriptor = $convert.base64Decode(
 const VerifyEmailRequest$json = {
   '1': 'VerifyEmailRequest',
   '2': [
-    {'1': 'email', '3': 1, '4': 1, '5': 9, '10': 'email'},
-    {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+    {'1': 'email_token', '3': 1, '4': 1, '5': 9, '10': 'emailToken'},
   ],
 };
 
 /// Descriptor for `VerifyEmailRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List verifyEmailRequestDescriptor = $convert.base64Decode(
-    'ChJWZXJpZnlFbWFpbFJlcXVlc3QSFAoFZW1haWwYASABKAlSBWVtYWlsEhQKBXRva2VuGAIgAS'
-    'gJUgV0b2tlbg==');
+    'ChJWZXJpZnlFbWFpbFJlcXVlc3QSHwoLZW1haWxfdG9rZW4YASABKAlSCmVtYWlsVG9rZW4=');
 
 @$core.Deprecated('Use verifyEmailResponseDescriptor instead')
 const VerifyEmailResponse$json = {
@@ -98,4 +96,85 @@ const VerifyEmailResponse$json = {
 /// Descriptor for `VerifyEmailResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List verifyEmailResponseDescriptor = $convert.base64Decode(
     'ChNWZXJpZnlFbWFpbFJlc3BvbnNlEhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2U=');
+
+@$core.Deprecated('Use resendVerificationEmailRequestDescriptor instead')
+const ResendVerificationEmailRequest$json = {
+  '1': 'ResendVerificationEmailRequest',
+  '2': [
+    {'1': 'reserved', '3': 1, '4': 1, '5': 9, '10': 'reserved'},
+  ],
+};
+
+/// Descriptor for `ResendVerificationEmailRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resendVerificationEmailRequestDescriptor = $convert.base64Decode(
+    'Ch5SZXNlbmRWZXJpZmljYXRpb25FbWFpbFJlcXVlc3QSGgoIcmVzZXJ2ZWQYASABKAlSCHJlc2'
+    'VydmVk');
+
+@$core.Deprecated('Use resendVerificationEmailResponseDescriptor instead')
+const ResendVerificationEmailResponse$json = {
+  '1': 'ResendVerificationEmailResponse',
+  '2': [
+    {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `ResendVerificationEmailResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resendVerificationEmailResponseDescriptor = $convert.base64Decode(
+    'Ch9SZXNlbmRWZXJpZmljYXRpb25FbWFpbFJlc3BvbnNlEhgKB21lc3NhZ2UYASABKAlSB21lc3'
+    'NhZ2U=');
+
+@$core.Deprecated('Use changePasswordRequestDescriptor instead')
+const ChangePasswordRequest$json = {
+  '1': 'ChangePasswordRequest',
+  '2': [
+    {'1': 'old_password', '3': 1, '4': 1, '5': 9, '10': 'oldPassword'},
+    {'1': 'new_password', '3': 2, '4': 1, '5': 9, '10': 'newPassword'},
+    {'1': 'reserved', '3': 3, '4': 1, '5': 9, '10': 'reserved'},
+  ],
+};
+
+/// Descriptor for `ChangePasswordRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List changePasswordRequestDescriptor = $convert.base64Decode(
+    'ChVDaGFuZ2VQYXNzd29yZFJlcXVlc3QSIQoMb2xkX3Bhc3N3b3JkGAEgASgJUgtvbGRQYXNzd2'
+    '9yZBIhCgxuZXdfcGFzc3dvcmQYAiABKAlSC25ld1Bhc3N3b3JkEhoKCHJlc2VydmVkGAMgASgJ'
+    'UghyZXNlcnZlZA==');
+
+@$core.Deprecated('Use changePasswordResponseDescriptor instead')
+const ChangePasswordResponse$json = {
+  '1': 'ChangePasswordResponse',
+  '2': [
+    {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `ChangePasswordResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List changePasswordResponseDescriptor = $convert.base64Decode(
+    'ChZDaGFuZ2VQYXNzd29yZFJlc3BvbnNlEhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2U=');
+
+@$core.Deprecated('Use changeEmailRequestDescriptor instead')
+const ChangeEmailRequest$json = {
+  '1': 'ChangeEmailRequest',
+  '2': [
+    {'1': 'old_email', '3': 1, '4': 1, '5': 9, '10': 'oldEmail'},
+    {'1': 'new_email', '3': 2, '4': 1, '5': 9, '10': 'newEmail'},
+    {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
+  ],
+};
+
+/// Descriptor for `ChangeEmailRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List changeEmailRequestDescriptor = $convert.base64Decode(
+    'ChJDaGFuZ2VFbWFpbFJlcXVlc3QSGwoJb2xkX2VtYWlsGAEgASgJUghvbGRFbWFpbBIbCgluZX'
+    'dfZW1haWwYAiABKAlSCG5ld0VtYWlsEhoKCHBhc3N3b3JkGAMgASgJUghwYXNzd29yZA==');
+
+@$core.Deprecated('Use changeEmailResponseDescriptor instead')
+const ChangeEmailResponse$json = {
+  '1': 'ChangeEmailResponse',
+  '2': [
+    {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `ChangeEmailResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List changeEmailResponseDescriptor = $convert.base64Decode(
+    'ChNDaGFuZ2VFbWFpbFJlc3BvbnNlEhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2U=');
 

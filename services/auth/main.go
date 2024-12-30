@@ -8,6 +8,7 @@ import (
 
 	"github.com/assidiqi598/umrah-erp/services/auth/internal"
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
+	"github.com/assidiqi598/umrah-erp/services/auth/public"
 	"github.com/assidiqi598/umrah-erp/shared/db"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -55,7 +56,7 @@ func main() {
 		log.Fatalf("failed to load TLS certificates: %v", err)
 	}
 
-	grpcServer := grpc.NewServer(grpc.Creds(creds))
+	grpcServer := grpc.NewServer(grpc.Creds(creds), grpc.UnaryInterceptor(public.JwtAuthInterceptor))
 	pb.RegisterAuthServiceServer(grpcServer, &internal.AuthServer{})
 
 	// Enable gRPC reflection

@@ -314,15 +314,11 @@ class RegisterResponse extends $pb.GeneratedMessage {
 
 class VerifyEmailRequest extends $pb.GeneratedMessage {
   factory VerifyEmailRequest({
-    $core.String? email,
-    $core.String? token,
+    $core.String? emailToken,
   }) {
     final $result = create();
-    if (email != null) {
-      $result.email = email;
-    }
-    if (token != null) {
-      $result.token = token;
+    if (emailToken != null) {
+      $result.emailToken = emailToken;
     }
     return $result;
   }
@@ -331,8 +327,7 @@ class VerifyEmailRequest extends $pb.GeneratedMessage {
   factory VerifyEmailRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VerifyEmailRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'email')
-    ..aOS(2, _omitFieldNames ? '' : 'token')
+    ..aOS(1, _omitFieldNames ? '' : 'emailToken')
     ..hasRequiredFields = false
   ;
 
@@ -358,22 +353,13 @@ class VerifyEmailRequest extends $pb.GeneratedMessage {
   static VerifyEmailRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get email => $_getSZ(0);
+  $core.String get emailToken => $_getSZ(0);
   @$pb.TagNumber(1)
-  set email($core.String v) { $_setString(0, v); }
+  set emailToken($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasEmail() => $_has(0);
+  $core.bool hasEmailToken() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEmail() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get token => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set token($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasToken() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearToken() => clearField(2);
+  void clearEmailToken() => clearField(1);
 }
 
 class VerifyEmailResponse extends $pb.GeneratedMessage {
@@ -415,6 +401,362 @@ class VerifyEmailResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static VerifyEmailResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VerifyEmailResponse>(create);
   static VerifyEmailResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get message => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set message($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMessage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMessage() => clearField(1);
+}
+
+class ResendVerificationEmailRequest extends $pb.GeneratedMessage {
+  factory ResendVerificationEmailRequest({
+    $core.String? reserved,
+  }) {
+    final $result = create();
+    if (reserved != null) {
+      $result.reserved = reserved;
+    }
+    return $result;
+  }
+  ResendVerificationEmailRequest._() : super();
+  factory ResendVerificationEmailRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResendVerificationEmailRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ResendVerificationEmailRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'reserved')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ResendVerificationEmailRequest clone() => ResendVerificationEmailRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ResendVerificationEmailRequest copyWith(void Function(ResendVerificationEmailRequest) updates) => super.copyWith((message) => updates(message as ResendVerificationEmailRequest)) as ResendVerificationEmailRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResendVerificationEmailRequest create() => ResendVerificationEmailRequest._();
+  ResendVerificationEmailRequest createEmptyInstance() => create();
+  static $pb.PbList<ResendVerificationEmailRequest> createRepeated() => $pb.PbList<ResendVerificationEmailRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ResendVerificationEmailRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResendVerificationEmailRequest>(create);
+  static ResendVerificationEmailRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get reserved => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set reserved($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasReserved() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearReserved() => clearField(1);
+}
+
+class ResendVerificationEmailResponse extends $pb.GeneratedMessage {
+  factory ResendVerificationEmailResponse({
+    $core.String? message,
+  }) {
+    final $result = create();
+    if (message != null) {
+      $result.message = message;
+    }
+    return $result;
+  }
+  ResendVerificationEmailResponse._() : super();
+  factory ResendVerificationEmailResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResendVerificationEmailResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ResendVerificationEmailResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ResendVerificationEmailResponse clone() => ResendVerificationEmailResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ResendVerificationEmailResponse copyWith(void Function(ResendVerificationEmailResponse) updates) => super.copyWith((message) => updates(message as ResendVerificationEmailResponse)) as ResendVerificationEmailResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResendVerificationEmailResponse create() => ResendVerificationEmailResponse._();
+  ResendVerificationEmailResponse createEmptyInstance() => create();
+  static $pb.PbList<ResendVerificationEmailResponse> createRepeated() => $pb.PbList<ResendVerificationEmailResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ResendVerificationEmailResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResendVerificationEmailResponse>(create);
+  static ResendVerificationEmailResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get message => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set message($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMessage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMessage() => clearField(1);
+}
+
+class ChangePasswordRequest extends $pb.GeneratedMessage {
+  factory ChangePasswordRequest({
+    $core.String? oldPassword,
+    $core.String? newPassword,
+    $core.String? reserved,
+  }) {
+    final $result = create();
+    if (oldPassword != null) {
+      $result.oldPassword = oldPassword;
+    }
+    if (newPassword != null) {
+      $result.newPassword = newPassword;
+    }
+    if (reserved != null) {
+      $result.reserved = reserved;
+    }
+    return $result;
+  }
+  ChangePasswordRequest._() : super();
+  factory ChangePasswordRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ChangePasswordRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChangePasswordRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'oldPassword')
+    ..aOS(2, _omitFieldNames ? '' : 'newPassword')
+    ..aOS(3, _omitFieldNames ? '' : 'reserved')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ChangePasswordRequest clone() => ChangePasswordRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ChangePasswordRequest copyWith(void Function(ChangePasswordRequest) updates) => super.copyWith((message) => updates(message as ChangePasswordRequest)) as ChangePasswordRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ChangePasswordRequest create() => ChangePasswordRequest._();
+  ChangePasswordRequest createEmptyInstance() => create();
+  static $pb.PbList<ChangePasswordRequest> createRepeated() => $pb.PbList<ChangePasswordRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ChangePasswordRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChangePasswordRequest>(create);
+  static ChangePasswordRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get oldPassword => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set oldPassword($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasOldPassword() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearOldPassword() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get newPassword => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set newPassword($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNewPassword() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNewPassword() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get reserved => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set reserved($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasReserved() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearReserved() => clearField(3);
+}
+
+class ChangePasswordResponse extends $pb.GeneratedMessage {
+  factory ChangePasswordResponse({
+    $core.String? message,
+  }) {
+    final $result = create();
+    if (message != null) {
+      $result.message = message;
+    }
+    return $result;
+  }
+  ChangePasswordResponse._() : super();
+  factory ChangePasswordResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ChangePasswordResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChangePasswordResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ChangePasswordResponse clone() => ChangePasswordResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ChangePasswordResponse copyWith(void Function(ChangePasswordResponse) updates) => super.copyWith((message) => updates(message as ChangePasswordResponse)) as ChangePasswordResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ChangePasswordResponse create() => ChangePasswordResponse._();
+  ChangePasswordResponse createEmptyInstance() => create();
+  static $pb.PbList<ChangePasswordResponse> createRepeated() => $pb.PbList<ChangePasswordResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ChangePasswordResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChangePasswordResponse>(create);
+  static ChangePasswordResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get message => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set message($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMessage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMessage() => clearField(1);
+}
+
+class ChangeEmailRequest extends $pb.GeneratedMessage {
+  factory ChangeEmailRequest({
+    $core.String? oldEmail,
+    $core.String? newEmail,
+    $core.String? password,
+  }) {
+    final $result = create();
+    if (oldEmail != null) {
+      $result.oldEmail = oldEmail;
+    }
+    if (newEmail != null) {
+      $result.newEmail = newEmail;
+    }
+    if (password != null) {
+      $result.password = password;
+    }
+    return $result;
+  }
+  ChangeEmailRequest._() : super();
+  factory ChangeEmailRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ChangeEmailRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChangeEmailRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'oldEmail')
+    ..aOS(2, _omitFieldNames ? '' : 'newEmail')
+    ..aOS(3, _omitFieldNames ? '' : 'password')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ChangeEmailRequest clone() => ChangeEmailRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ChangeEmailRequest copyWith(void Function(ChangeEmailRequest) updates) => super.copyWith((message) => updates(message as ChangeEmailRequest)) as ChangeEmailRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ChangeEmailRequest create() => ChangeEmailRequest._();
+  ChangeEmailRequest createEmptyInstance() => create();
+  static $pb.PbList<ChangeEmailRequest> createRepeated() => $pb.PbList<ChangeEmailRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ChangeEmailRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChangeEmailRequest>(create);
+  static ChangeEmailRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get oldEmail => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set oldEmail($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasOldEmail() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearOldEmail() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get newEmail => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set newEmail($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNewEmail() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNewEmail() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get password => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set password($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPassword() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPassword() => clearField(3);
+}
+
+class ChangeEmailResponse extends $pb.GeneratedMessage {
+  factory ChangeEmailResponse({
+    $core.String? message,
+  }) {
+    final $result = create();
+    if (message != null) {
+      $result.message = message;
+    }
+    return $result;
+  }
+  ChangeEmailResponse._() : super();
+  factory ChangeEmailResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ChangeEmailResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChangeEmailResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ChangeEmailResponse clone() => ChangeEmailResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ChangeEmailResponse copyWith(void Function(ChangeEmailResponse) updates) => super.copyWith((message) => updates(message as ChangeEmailResponse)) as ChangeEmailResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ChangeEmailResponse create() => ChangeEmailResponse._();
+  ChangeEmailResponse createEmptyInstance() => create();
+  static $pb.PbList<ChangeEmailResponse> createRepeated() => $pb.PbList<ChangeEmailResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ChangeEmailResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChangeEmailResponse>(create);
+  static ChangeEmailResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);

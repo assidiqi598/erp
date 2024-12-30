@@ -108,8 +108,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 	// Test VerifyEmail (optional, depending on your service implementation)
 	t.Run("VerifyEmail", func(t *testing.T) {
 		req := &pb.VerifyEmailRequest{
-			Email: email,
-			Token: emailToken, // Replace with the expected verification code
+			EmailToken: emailToken, // Replace with the expected verification code
 		}
 
 		res, err := client.VerifyEmail(context.Background(), req)

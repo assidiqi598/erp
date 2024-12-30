@@ -1,4 +1,4 @@
-.PHONY: setup-grpc compose-up test-auth
+.PHONY: setup_grpc compose_up test_auth
 
 AUTH_DIR := ./services/auth/
 FLUTTER_DIR := ./flutter/
@@ -11,7 +11,7 @@ PROTO_SRC_DIR_AUTH := $(AUTH_DIR)proto/
 PROTO_FLUTTER_OUT_DIR := $(FLUTTER_DIR)lib/proto/
 
 # Command to generate Go and gRPC code
-setup-grpc:
+setup_grpc:
 	@protoc \
 		--proto_path=$(PROTO_SRC_DIR_AUTH) \
 		--go_out=$(PROTO_SRC_DIR_AUTH) \

@@ -18,7 +18,7 @@ type User struct {
 	Email             string    `bson:"email"`
 	PhoneNumber       string    `bson:"phone_number"`
 	IsVerified        bool      `bson:"is_verified"`
-	Token             string    `bson:"token"`
+	EmailToken        string    `bson:"email_token"`
 	VerificationMsgID string    `bson:"verification_msg_id"`
 	LastLogin         time.Time `bson:"last_login"`
 	CreatedAt         time.Time `bson:"created_at"`

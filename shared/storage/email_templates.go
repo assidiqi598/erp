@@ -2,51 +2,47 @@ package storage
 
 import (
 	"bytes"
+	"context"
 	"fmt"
-	"html/template"
-	"net/http"
+	"log"
 	"reflect"
+	"strings"
+
+	"github.com/minio/minio-go/v7"
 )
 
-func GetEmailTemplateAndReplace[T any](url string, data T) (string, error) {
+func (s *S3ClientType) GetEmailTemplateAndReplace(bucketName string, objectKey string, data any) (string, error) {
 
-	// Ensure the input is a struct
-	if reflect.TypeOf(data).Kind() != reflect.Struct {
-		fmt.Println("data is not a struct")
-		return "", fmt.Errorf("data is not a struct")
+	// Check if the provided data is a struct
+	valData := reflect.ValueOf(data)
+	if valData.Kind() != reflect.Struct {
+		return "", fmt.Errorf("input is not a struct, got: %s", valData.Kind())
 	}
 
-	// Fetch the template from the URL
-	resp, err := http.Get(url)
+	// Fetch the HTML file
+	object, err := s.Client.GetObject(context.Background(), bucketName, objectKey, minio.GetObjectOptions{})
 	if err != nil {
-		return "", fmt.Errorf("failed to fetch template: %w", err)
+		log.Fatalf("Failed to get object: %v", err)
 	}
-	defer resp.Body.Close()
-
-	// Check if the response status is OK
-	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("failed to fetch template: %s", resp.Status)
-	}
+	defer object.Close()
 
 	// Read the template content
 	buf := new(bytes.Buffer)
-	_, err = buf.ReadFrom(resp.Body)
+	_, err = buf.ReadFrom(object)
 	if err != nil {
 		return "", fmt.Errorf("failed to read template: %w", err)
 	}
+	htmlContent := buf.String()
 
-	// Parse the template with placeholders
-	tmpl, err := template.New("email").Parse(buf.String())
-	if err != nil {
-		return "", fmt.Errorf("failed to parse template: %w", err)
+	// Iterate over the fields
+	typ := valData.Type()
+	for i := 0; i < valData.NumField(); i++ {
+		field := typ.Field(i)     // Struct field metadata
+		value := valData.Field(i) // Actual value of the field
+		fmt.Printf("Field Name: %s, Field Type: %s, Field Value: %v\n", field.Name, field.Type, value.Interface())
+
+		htmlContent = strings.ReplaceAll(htmlContent, field.Name, value.Interface().(string))
 	}
 
-	// Replace placeholders with actual values
-	var result bytes.Buffer
-	err = tmpl.Execute(&result, data)
-	if err != nil {
-		return "", fmt.Errorf("failed to execute template: %w", err)
-	}
-
-	return result.String(), nil
+	return htmlContent, nil
 }

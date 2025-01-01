@@ -3,7 +3,7 @@ module github.com/assidiqi598/erp/services/auth
 go 1.23.4
 
 require (
-	github.com/assidiqi598/erp/shared v0.0.0-20250101043950-ab93e4f30269
+	github.com/assidiqi598/erp/shared v0.0.0-20250101064549-aa4850ed5a6f
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.10.0

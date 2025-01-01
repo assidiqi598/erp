@@ -15,6 +15,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/metadata"
 )
 
 func TestMain(m *testing.M) {
@@ -64,6 +65,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 
 	const email = "developmore@yahoo.com"
 	var emailToken string
+	var loginToken string
 
 	// Test Register
 	t.Run("Register", func(t *testing.T) {
@@ -87,7 +89,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		assert.Equal(t, email, user["email"])
 		assert.Equal(t, "Test User", user["username"])
 		assert.Contains(t, user["verification_msg_id"], "mailin.fr")
-		emailToken = user["token"].(string)
+		emailToken = user["email_token"].(string)
 	})
 
 	// Test Login
@@ -103,15 +105,21 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		assert.Equal(t, res.Message, "Login successful")
 		assert.NotEmpty(t, res.Token, "Expected a non-empty JWT token")
 		assert.NotEmpty(t, res.RefreshToken, "Expected a non-empty JWT refresh token")
+
+		loginToken = res.Token
 	})
 
 	// Test VerifyEmail (optional, depending on your service implementation)
 	t.Run("VerifyEmail", func(t *testing.T) {
+
+		md := metadata.New(map[string]string{"authorization": "Bearer " + loginToken})
+		ctx := metadata.NewOutgoingContext(context.Background(), md)
+
 		req := &pb.VerifyEmailRequest{
 			EmailToken: emailToken, // Replace with the expected verification code
 		}
 
-		res, err := client.VerifyEmail(context.Background(), req)
+		res, err := client.VerifyEmail(ctx, req)
 		assert.NoError(t, err)
 		assert.NotNil(t, res)
 		assert.Equal(t, res.Message, "Anda berhasil terverifikasi")

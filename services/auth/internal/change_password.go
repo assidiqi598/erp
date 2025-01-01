@@ -28,7 +28,7 @@ func (s *AuthServer) ChangePassword(ctx context.Context, req *pb.ChangePasswordR
 	})
 	if err != nil {
 		log.Printf("User not found: %v", err)
-		return nil, status.Errorf(codes.NotFound, "User tidak ditemukan")
+		return nil, status.Errorf(codes.NotFound, "User tidak ditemukan.")
 	}
 
 	// Compare old password
@@ -36,7 +36,7 @@ func (s *AuthServer) ChangePassword(ctx context.Context, req *pb.ChangePasswordR
 
 	if err != nil {
 		log.Printf("Invalid password for user: %v", user.Email)
-		return nil, status.Errorf(codes.Unauthenticated, "Kode pengubah password salah")
+		return nil, status.Errorf(codes.Unauthenticated, "Kode pengubah password salah.")
 	}
 
 	cost, err := strconv.Atoi(os.Getenv("BCRYPT_COST"))
@@ -49,14 +49,14 @@ func (s *AuthServer) ChangePassword(ctx context.Context, req *pb.ChangePasswordR
 	newHashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.NewPassword), cost)
 	if err != nil {
 		log.Printf("Error hashing password: %v", err)
-		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan hashing password")
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan hashing password.")
 	}
 
 	userObjectID, err := primitive.ObjectIDFromHex(user.ID)
 
 	if err != nil {
 		log.Printf("Error converting id: %v", err)
-		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan konversi ID")
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan konversi ID.")
 	}
 
 	err = repo.UpdateUser(
@@ -70,8 +70,8 @@ func (s *AuthServer) ChangePassword(ctx context.Context, req *pb.ChangePasswordR
 
 	if err != nil {
 		log.Printf("Error updating user: %v", err)
-		return nil, status.Errorf(codes.Internal, "Update user gagal")
+		return nil, status.Errorf(codes.Internal, "Update user gagal.")
 	}
 
-	return &pb.ChangePasswordResponse{Message: "Password berhasil diubah"}, nil
+	return &pb.ChangePasswordResponse{Message: "Password berhasil diubah."}, nil
 }

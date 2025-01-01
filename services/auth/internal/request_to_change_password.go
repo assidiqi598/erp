@@ -33,37 +33,14 @@ func (s *AuthServer) RequestToChangePassword(
 	})
 	if err != nil {
 		log.Printf("User not found: %v", err)
-		return nil, status.Errorf(codes.NotFound, "User not found")
+		return nil, status.Errorf(codes.NotFound, "User tidak ditemukan.")
 	}
 
 	randomString, err := utils.GenerateSecureRandomString(10)
 
-	cost, err := strconv.Atoi(os.Getenv("BCRYPT_COST"))
 	if err != nil {
-		log.Printf("Error: %v", err)
-		cost = bcrypt.DefaultCost
-	}
-
-	// Hash the random string
-	hashedRandomString, err := bcrypt.GenerateFromPassword([]byte(randomString), cost)
-
-	userObjectId, err := primitive.ObjectIDFromHex(user.ID)
-
-	if err != nil {
-		log.Printf("Error converting id: %v", err)
-	}
-
-	err = repo.UpdateUser(
-		context.Background(),
-		bson.M{"_id": userObjectId},
-		bson.M{
-			"$set": bson.M{
-				"given_password": hashedRandomString,
-			},
-		})
-
-	if err != nil {
-		log.Printf("Error updating user: %v", err)
+		log.Printf("Failed generating random string: %v", err)
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan dalam pembuatan kode pengubah password.")
 	}
 
 	emailData := struct {
@@ -84,7 +61,7 @@ func (s *AuthServer) RequestToChangePassword(
 
 	if err != nil {
 		log.Printf("Error getting html email content: %v", err)
-		return nil, status.Errorf(codes.Internal, "Failed getting html email content")
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan dalam pembuatan email.")
 	}
 
 	resp, err := utils.SendEmail(
@@ -100,7 +77,44 @@ func (s *AuthServer) RequestToChangePassword(
 
 	if err != nil {
 		log.Printf("Error sending email verification: %v", err)
-		return nil, status.Errorf(codes.Internal, "Failed to send email verification")
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan dalam pengiriman email.")
 	}
 
+	cost, err := strconv.Atoi(os.Getenv("BCRYPT_COST"))
+	if err != nil {
+		log.Printf("Error: %v", err)
+		cost = bcrypt.DefaultCost
+	}
+
+	// Hash the random string
+	hashedRandomString, err := bcrypt.GenerateFromPassword([]byte(randomString), cost)
+
+	if err != nil {
+		log.Printf("Error creating hashed random string: %v", err)
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan dalam hashing kode.")
+	}
+
+	userObjectId, err := primitive.ObjectIDFromHex(user.ID)
+
+	if err != nil {
+		log.Printf("Error converting id: %v", err)
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan konversi ID.")
+	}
+
+	err = repo.UpdateUser(
+		context.Background(),
+		bson.M{"_id": userObjectId},
+		bson.M{
+			"$set": bson.M{
+				"given_password":     hashedRandomString,
+				"change_pass_msg_id": resp,
+			},
+		})
+
+	if err != nil {
+		log.Printf("Error updating user: %v", err)
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan dalam update user.")
+	}
+
+	return &pb.RequestToChangePasswordResponse{Message: "Permintaan berhasil diproses, mohon cek email Anda."}, nil
 }

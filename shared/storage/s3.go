@@ -32,7 +32,7 @@ func CreateS3Client(cred S3Credentials) error {
 
 	log.Println("Connected to S3")
 
-	S3Client.Client = client
+	S3Client = &S3ClientType{Client: client}
 
 	return nil
 }

@@ -8,6 +8,7 @@ import (
 
 	pb "github.com/assidiqi598/erp/services/auth/proto"
 	"github.com/assidiqi598/erp/shared/repositories"
+	"github.com/assidiqi598/erp/shared/storage"
 	"github.com/assidiqi598/erp/shared/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -71,6 +72,35 @@ func (s *AuthServer) RequestToChangePassword(
 	}{
 		Username:      user.Username,
 		GivenPassword: randomString,
+	}
+
+	s3Client := storage.GetS3Client()
+
+	emailHTML, err := s3Client.GetEmailTemplateAndReplace(
+		os.Getenv("S3_BUCKET_NAME"),
+		"email_templates/change_password.html",
+		emailData,
+	)
+
+	if err != nil {
+		log.Printf("Error getting html email content: %v", err)
+		return nil, status.Errorf(codes.Internal, "Failed getting html email content")
+	}
+
+	resp, err := utils.SendEmail(
+		os.Getenv("BREVO_API_KEY"),
+		"do-not-reply@devmore.id",
+		"Devmore",
+		user.Email,
+		user.Username,
+		"Verifikasi Email",
+		"Berikut merupakan kode verifikasi email Anda",
+		emailHTML,
+	)
+
+	if err != nil {
+		log.Printf("Error sending email verification: %v", err)
+		return nil, status.Errorf(codes.Internal, "Failed to send email verification")
 	}
 
 }

@@ -21,6 +21,7 @@ type User struct {
 	IsVerified        bool      `bson:"is_verified"`
 	EmailToken        string    `bson:"email_token"`
 	VerificationMsgID string    `bson:"verification_msg_id"`
+	ChangePassMsgID   string    `bson:"change_pass_msg_id"`
 	LastLogin         time.Time `bson:"last_login"`
 	CreatedAt         time.Time `bson:"created_at"`
 }

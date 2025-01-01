@@ -15,8 +15,13 @@ func (s *S3ClientType) GetEmailTemplateAndReplace(bucketName string, objectKey s
 
 	// Check if the provided data is a struct
 	valData := reflect.ValueOf(data)
-	if valData.Kind() != reflect.Ptr || valData.Kind() != reflect.Struct {
-		return "", fmt.Errorf("input is not a pointer to struct, got: %s", valData.Kind())
+	if valData.Kind() != reflect.Ptr {
+		return "", fmt.Errorf("input is not a pointer, got: %s", valData.Kind())
+	}
+
+	// Check if the value the pointer points to is a struct
+	if valData.Elem().Kind() != reflect.Struct {
+		return "", fmt.Errorf("input is not pointing to a struct, got: %s", valData.Elem().Kind())
 	}
 
 	// Fetch the HTML file

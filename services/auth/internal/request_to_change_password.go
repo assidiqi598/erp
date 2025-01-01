@@ -56,7 +56,7 @@ func (s *AuthServer) RequestToChangePassword(
 	emailHTML, err := s3Client.GetEmailTemplateAndReplace(
 		os.Getenv("S3_BUCKET_NAME"),
 		"email_templates/change_password.html",
-		emailData,
+		&emailData,
 	)
 
 	if err != nil {

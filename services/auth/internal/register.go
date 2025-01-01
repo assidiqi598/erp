@@ -76,7 +76,7 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 	emailHTML, err := s3Client.GetEmailTemplateAndReplace(
 		os.Getenv("S3_BUCKET_NAME"),
 		"email_templates/verifikasi_token.html",
-		newUser,
+		&newUser,
 	)
 
 	if err != nil {

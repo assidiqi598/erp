@@ -6,9 +6,9 @@ import (
 	"os"
 	"strconv"
 
-	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
-	"github.com/assidiqi598/umrah-erp/shared/repositories"
-	"github.com/assidiqi598/umrah-erp/shared/utils"
+	pb "github.com/assidiqi598/erp/services/auth/proto"
+	"github.com/assidiqi598/erp/shared/repositories"
+	"github.com/assidiqi598/erp/shared/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"

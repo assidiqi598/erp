@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
+	pb "github.com/assidiqi598/erp/services/auth/proto"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"

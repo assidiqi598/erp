@@ -11,12 +11,12 @@ import (
 	"github.com/minio/minio-go/v7"
 )
 
-func (s *S3ClientType) GetEmailTemplateAndReplace(bucketName string, objectKey string, data *any) (string, error) {
+func (s *S3ClientType) GetEmailTemplateAndReplace(bucketName string, objectKey string, data any) (string, error) {
 
 	// Check if the provided data is a struct
 	valData := reflect.ValueOf(data)
-	if valData.Kind() != reflect.Struct {
-		return "", fmt.Errorf("input is not a struct, got: %s", valData.Kind())
+	if valData.Kind() != reflect.Ptr || valData.Kind() != reflect.Struct {
+		return "", fmt.Errorf("input is not a pointer to struct, got: %s", valData.Kind())
 	}
 
 	// Fetch the HTML file

@@ -48,7 +48,7 @@ func (s *AuthServer) ResendVerificationEmail(
 	emailHTML, err := s3Client.GetEmailTemplateAndReplace(
 		os.Getenv("S3_BUCKET_NAME"),
 		"email_templates/verifikasi_token.html",
-		*user,
+		user,
 	)
 
 	if err != nil {

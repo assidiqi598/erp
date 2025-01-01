@@ -41,7 +41,13 @@ func (s *AuthServer) ResendVerificationEmail(
 		return nil, status.Errorf(codes.NotFound, "User not found")
 	}
 
-	emailHTML, err := storage.GetEmailTemplateAndReplace(os.Getenv("S3_URI")+"email_templates/verifikasi_token.html", user)
+	s3Client := storage.GetS3Client()
+
+	emailHTML, err := s3Client.GetEmailTemplateAndReplace(
+		os.Getenv("S3_BUCKET_NAME"),
+		"email_templates/verifikasi_token.html",
+		user,
+	)
 
 	if err != nil {
 		log.Printf("Error getting html email content: %v", err)

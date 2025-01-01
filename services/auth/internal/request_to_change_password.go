@@ -57,12 +57,20 @@ func (s *AuthServer) RequestToChangePassword(
 		bson.M{"_id": userObjectId},
 		bson.M{
 			"$set": bson.M{
-				"password": hashedRandomString,
+				"given_password": hashedRandomString,
 			},
 		})
 
 	if err != nil {
 		log.Printf("Error updating user: %v", err)
+	}
+
+	emailData := struct {
+		Username      string
+		GivenPassword string
+	}{
+		Username:      user.Username,
+		GivenPassword: randomString,
 	}
 
 }

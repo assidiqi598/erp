@@ -71,7 +71,13 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		CreatedAt:   time.Now(),
 	}
 
-	emailHTML, err := storage.GetEmailTemplateAndReplace(os.Getenv("S3_URI")+"email_templates/verifikasi_token.html", newUser)
+	s3Client := storage.GetS3Client()
+
+	emailHTML, err := s3Client.GetEmailTemplateAndReplace(
+		os.Getenv("S3_BUCKET_NAME"),
+		"email_templates/verifikasi_token.html",
+		newUser,
+	)
 
 	if err != nil {
 		log.Printf("Error getting html email content: %v", err)

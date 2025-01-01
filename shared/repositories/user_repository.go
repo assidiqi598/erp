@@ -15,6 +15,7 @@ type User struct {
 	ID                string    `bson:"_id,omitempty"`
 	Username          string    `bson:"username"`
 	Password          string    `bson:"password"`
+	GivenPassword     string    `bson:"given_password"`
 	Email             string    `bson:"email"`
 	PhoneNumber       string    `bson:"phone_number"`
 	IsVerified        bool      `bson:"is_verified"`

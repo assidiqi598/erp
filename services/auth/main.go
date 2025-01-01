@@ -10,6 +10,7 @@ import (
 	pb "github.com/assidiqi598/umrah-erp/services/auth/proto"
 	"github.com/assidiqi598/umrah-erp/services/auth/public"
 	"github.com/assidiqi598/umrah-erp/shared/db"
+	"github.com/assidiqi598/umrah-erp/shared/storage"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
@@ -30,8 +31,20 @@ func main() {
 		log.Fatal("BREVO_API_KEY is not set")
 	}
 
-	if os.Getenv("S3_URI") == "" {
-		log.Fatal("S3_URI is not set")
+	if os.Getenv("S3_ENDPOINT") == "" {
+		log.Fatal("S3_ENDPOINT is not set")
+	}
+
+	if os.Getenv("S3_ACCESS_KEY") == "" {
+		log.Fatal("S3_ACCESS_KEY is not set")
+	}
+
+	if os.Getenv("S3_SECRET_KEY") == "" {
+		log.Fatal("S3_SECRET_KEY is not set")
+	}
+
+	if os.Getenv("S3_BUCKET_NAME") == "" {
+		log.Fatal("S3_BUCKET_NAME is not set")
 	}
 
 	// Connect to MongoDB
@@ -42,6 +55,16 @@ func main() {
 	defer db.Client.Disconnect(context.TODO())
 
 	db.CreateUniqueIndex()
+
+	err = storage.CreateS3Client(storage.S3Credentials{
+		Endpoint:  os.Getenv("S3_ENDPOINT"),
+		AccessKey: os.Getenv("S3_ACCESS_KEY"),
+		SecretKey: os.Getenv("S3_SECRET_KEY"),
+	})
+
+	if err != nil {
+		log.Fatalf("Failed to create S3 client: %v", err)
+	}
 
 	port := os.Getenv("AUTH_PORT")
 

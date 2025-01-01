@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"html/template"
 	"log"
 	"reflect"
-	"strings"
 
 	"github.com/minio/minio-go/v7"
 )
@@ -34,14 +34,16 @@ func (s *S3ClientType) GetEmailTemplateAndReplace(bucketName string, objectKey s
 	}
 	htmlContent := buf.String()
 
-	// Iterate over the fields
-	typ := valData.Type()
-	for i := 0; i < valData.NumField(); i++ {
-		field := typ.Field(i)     // Struct field metadata
-		value := valData.Field(i) // Actual value of the field
-		fmt.Printf("Field Name: %s, Field Type: %s, Field Value: %v\n", field.Name, field.Type, value.Interface())
+	// Parse the template and replace placeholders
+	tmpl, err := template.New(objectKey).Parse(htmlContent)
+	if err != nil {
+		log.Fatalf("Failed to parse template: %v", err)
+	}
 
-		htmlContent = strings.ReplaceAll(htmlContent, field.Name, value.Interface().(string))
+	var renderedHTML bytes.Buffer
+	err = tmpl.Execute(&renderedHTML, data)
+	if err != nil {
+		log.Fatalf("Failed to execute template: %v", err)
 	}
 
 	return htmlContent, nil

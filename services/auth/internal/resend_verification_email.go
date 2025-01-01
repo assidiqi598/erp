@@ -24,6 +24,7 @@ func (s *AuthServer) ResendVerificationEmail(
 	claims, ok := ctx.Value(public.ClaimsKey).(*public.Claims)
 	if !ok {
 		log.Println("Failed to retrieve claims from context")
+		return nil, status.Errorf(codes.Internal, "Gagal mengidentifikasi request.")
 	}
 
 	repo := repositories.NewUserRepository()
@@ -32,13 +33,14 @@ func (s *AuthServer) ResendVerificationEmail(
 
 	if err != nil {
 		log.Printf("Error converting id: %v", err)
+		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan konversi ID.")
 	}
 
 	user, err := repo.FindUser(bson.M{"_id": userObjectId})
 
 	if err != nil {
 		log.Printf("User not found: %v", err)
-		return nil, status.Errorf(codes.NotFound, "User not found")
+		return nil, status.Errorf(codes.NotFound, "User tidak ditemukan.")
 	}
 
 	s3Client := storage.GetS3Client()
@@ -46,12 +48,12 @@ func (s *AuthServer) ResendVerificationEmail(
 	emailHTML, err := s3Client.GetEmailTemplateAndReplace(
 		os.Getenv("S3_BUCKET_NAME"),
 		"email_templates/verifikasi_token.html",
-		user,
+		*user,
 	)
 
 	if err != nil {
 		log.Printf("Error getting html email content: %v", err)
-		return nil, status.Errorf(codes.Internal, "Failed getting html email content")
+		return nil, status.Errorf(codes.Internal, "Gagal menyiapkan email.")
 	}
 
 	resp, err := utils.SendEmail(
@@ -61,13 +63,13 @@ func (s *AuthServer) ResendVerificationEmail(
 		user.Email,
 		user.Username,
 		"Verifikasi Email",
-		"Berikut merupakan kode verifikasi email Anda",
+		"Berikut merupakan kode verifikasi email Anda.",
 		emailHTML,
 	)
 
 	if err != nil {
 		log.Printf("Error sending email verification: %v", err)
-		return nil, status.Errorf(codes.Internal, "Failed to send email verification")
+		return nil, status.Errorf(codes.Internal, "Gagal mengirim email verifikasi.")
 	}
 
 	err = repo.UpdateUser(
@@ -81,7 +83,8 @@ func (s *AuthServer) ResendVerificationEmail(
 
 	if err != nil {
 		log.Printf("Error updating user: %v", err)
+		return nil, status.Errorf(codes.Internal, "Gagal update user.")
 	}
 
-	return &pb.ResendVerificationEmailResponse{Message: "Email telah terkirim kembali"}, nil
+	return &pb.ResendVerificationEmailResponse{Message: "Email telah terkirim kembali."}, nil
 }

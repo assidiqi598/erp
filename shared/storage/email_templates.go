@@ -11,7 +11,7 @@ import (
 	"github.com/minio/minio-go/v7"
 )
 
-func (s *S3ClientType) GetEmailTemplateAndReplace(bucketName string, objectKey string, data any) (string, error) {
+func (s *S3ClientType) GetEmailTemplateAndReplace(bucketName string, objectKey string, data *any) (string, error) {
 
 	// Check if the provided data is a struct
 	valData := reflect.ValueOf(data)

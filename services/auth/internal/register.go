@@ -91,7 +91,7 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 		req.Email,
 		req.Username,
 		"Verifikasi Email",
-		"Berikut merupakan kode verifikasi email Anda",
+		"Berikut merupakan kode verifikasi email Anda.",
 		emailHTML,
 	)
 
@@ -109,6 +109,6 @@ func (s *AuthServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 	}
 
 	return &pb.RegisterResponse{
-		Message: "Anda berhasil terdaftar, mohon verifikasi dengan token yang telah dikirim.",
+		Message: "Anda berhasil terdaftar, mohon login dan verifikasi dengan token yang telah dikirim.",
 	}, nil
 }

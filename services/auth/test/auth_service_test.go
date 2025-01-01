@@ -66,8 +66,8 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 	const email = "developmore@yahoo.com"
 	var emailToken string
 	var loginToken string
+	var verificationMsgId string
 
-	// Test Register
 	t.Run("Register", func(t *testing.T) {
 		req := &pb.RegisterRequest{
 			Email:       email,
@@ -79,7 +79,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		res, err := client.Register(context.Background(), req)
 		assert.NoError(t, err)
 		assert.NotNil(t, res)
-		assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon verifikasi dengan token yang telah dikirim.")
+		assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon login dan verifikasi dengan token yang telah dikirim.")
 		assert.NotNil(t, res.UserId)
 
 		// Check database for new user
@@ -89,10 +89,11 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		assert.Equal(t, email, user["email"])
 		assert.Equal(t, "Test User", user["username"])
 		assert.Contains(t, user["verification_msg_id"], "mailin.fr")
+
 		emailToken = user["email_token"].(string)
+		verificationMsgId = user["verification_msg_id"].(string)
 	})
 
-	// Test Login
 	t.Run("Login", func(t *testing.T) {
 		req := &pb.LoginWithEmailAndPassRequest{
 			Email:    email,
@@ -109,7 +110,25 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		loginToken = res.Token
 	})
 
-	// Test VerifyEmail (optional, depending on your service implementation)
+	t.Run("ResendVerificationEmail", func(t *testing.T) {
+		md := metadata.New(map[string]string{"authorization": "Bearer " + loginToken})
+		ctx := metadata.NewOutgoingContext(context.Background(), md)
+
+		req := &pb.ResendVerificationEmailRequest{}
+
+		res, err := client.ResendVerificationEmail(ctx, req)
+
+		assert.NoError(t, err)
+		assert.NotNil(t, res)
+		assert.Equal(t, res.Message, "Email telah terkirim kembali.")
+
+		var user bson.M
+		err = usersCollection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+		assert.NoError(t, err)
+		assert.Contains(t, user["verification_msg_id"], "mailin.fr")
+		assert.NotSame(t, verificationMsgId, user["verification_msg_id"])
+	})
+
 	t.Run("VerifyEmail", func(t *testing.T) {
 
 		md := metadata.New(map[string]string{"authorization": "Bearer " + loginToken})
@@ -131,18 +150,18 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		assert.Equal(t, true, user["is_verified"])
 	})
 
-	t.Run("Remove Test User", func(t *testing.T) {
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
+	// t.Run("Remove Test User", func(t *testing.T) {
+	// 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	// 	defer cancel()
 
-		res, err := usersCollection.DeleteOne(ctx, bson.M{"email": email})
-		if err != nil {
-			t.Fatalf("Failed to clean up test user: %v", err)
-		}
+	// 	res, err := usersCollection.DeleteOne(ctx, bson.M{"email": email})
+	// 	if err != nil {
+	// 		t.Fatalf("Failed to clean up test user: %v", err)
+	// 	}
 
-		log.Printf("Cleaned up test user with email: %s", email)
+	// 	log.Printf("Cleaned up test user with email: %s", email)
 
-		assert.Equal(t, 1, int(res.DeletedCount))
+	// 	assert.Equal(t, 1, int(res.DeletedCount))
 
-	})
+	// })
 }

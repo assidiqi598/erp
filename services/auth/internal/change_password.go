@@ -64,7 +64,8 @@ func (s *AuthServer) ChangePassword(ctx context.Context, req *pb.ChangePasswordR
 		bson.M{"_id": userObjectID},
 		bson.M{
 			"$set": bson.M{
-				"password": newHashedPassword,
+				"password":       newHashedPassword,
+				"given_password": "",
 			},
 		})
 

@@ -8,6 +8,8 @@ github.com/assidiqi598/erp/shared v0.0.0-20250101075557-d6fa9a22df6e h1:C1kkIj20
 github.com/assidiqi598/erp/shared v0.0.0-20250101075557-d6fa9a22df6e/go.mod h1:rDq+MAk67K5BNVmi0891+R0iG4DprgrXqNQfoBPL7kQ=
 github.com/assidiqi598/erp/shared v0.0.0-20250101080331-0f26afa8e54b h1:KBTCUIsAaTBDSGh4hjOSwQSqVID7AWRGf2tvopAFEd8=
 github.com/assidiqi598/erp/shared v0.0.0-20250101080331-0f26afa8e54b/go.mod h1:rDq+MAk67K5BNVmi0891+R0iG4DprgrXqNQfoBPL7kQ=
+github.com/assidiqi598/erp/shared v0.0.0-20250101084745-b19c15318d1f h1:aDXIbqxdOt04B8PBN5WPMEi8SpnTWamaze1TJ21D0Ic=
+github.com/assidiqi598/erp/shared v0.0.0-20250101084745-b19c15318d1f/go.mod h1:rDq+MAk67K5BNVmi0891+R0iG4DprgrXqNQfoBPL7kQ=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkpeCY=

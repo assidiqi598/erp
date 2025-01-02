@@ -52,7 +52,7 @@ func JwtAuthInterceptor(
 		"/auth.AuthService/Register":                true,
 		"/auth.AuthService/LoginWithEmailAndPass":   true,
 		"/auth.AuthService/RequestToChangePassword": true,
-		"/auth.AuthService/ChangePasswordRequest":   true,
+		"/auth.AuthService/ChangePassword":          true,
 	}
 
 	// Check if the current method is public

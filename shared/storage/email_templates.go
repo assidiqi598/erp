@@ -51,5 +51,5 @@ func (s *S3ClientType) GetEmailTemplateAndReplace(bucketName string, objectKey s
 		log.Fatalf("Failed to execute template: %v", err)
 	}
 
-	return htmlContent, nil
+	return renderedHTML.String(), nil
 }

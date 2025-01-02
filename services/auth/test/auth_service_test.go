@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -64,9 +65,11 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 	client := pb.NewAuthServiceClient(conn)
 
 	const email = "developmore@yahoo.com"
+	const newPass = "newpass123"
 	var emailToken string
 	var loginToken string
 	var verificationMsgId string
+	var randomString string
 
 	t.Run("Register", func(t *testing.T) {
 		// req := &pb.RegisterRequest{
@@ -84,7 +87,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 
 		// Check database for new user
 		var user bson.M
-		err = usersCollection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+		err = usersCollection.FindOne(context.Background(), bson.M{"email": email}).Decode(&user)
 		assert.NoError(t, err)
 		assert.Equal(t, email, user["email"])
 		assert.Equal(t, "Test User", user["username"])
@@ -126,7 +129,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		err = usersCollection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
 		assert.NoError(t, err)
 		assert.Contains(t, user["verification_msg_id"], "mailin.fr")
-		assert.NotSame(t, verificationMsgId, user["verification_msg_id"])
+		assert.NotEqual(t, verificationMsgId, user["verification_msg_id"].(string), "The strings should not be the same")
 	})
 
 	t.Run("VerifyEmail", func(t *testing.T) {
@@ -148,6 +151,65 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		err = usersCollection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
 		assert.NoError(t, err)
 		assert.Equal(t, true, user["is_verified"])
+	})
+
+	t.Run("RequestToChangePassword", func(t *testing.T) {
+		req := &pb.RequestToChangePasswordRequest{
+			Email: email,
+		}
+
+		res, err := client.RequestToChangePassword(context.Background(), req)
+		assert.NoError(t, err)
+		assert.NotNil(t, res)
+		msg := res.Message
+		if os.Getenv("ENV") == "dev" || os.Getenv("ENV") == "" {
+			parts := strings.Split(msg, ".")
+			msg = parts[0] + "."
+			randomString = parts[len(parts)-1]
+		}
+		assert.Equal(t, msg, "Permintaan berhasil diproses, mohon cek email Anda.")
+
+		var user bson.M
+		err = usersCollection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+		assert.NoError(t, err)
+		assert.Contains(t, user["change_pass_msg_id"], "mailin.fr")
+		assert.NotEmpty(t, user["given_password"], "The string should not be empty")
+	})
+
+	t.Run("ChangePassword", func(t *testing.T) {
+		if os.Getenv("ENV") == "dev" || os.Getenv("ENV") == "" {
+
+			req := &pb.ChangePasswordRequest{
+				GivenPassword: randomString,
+				NewPassword:   newPass,
+				Email:         email,
+			}
+
+			res, err := client.ChangePassword(context.Background(), req)
+			assert.NoError(t, err)
+			assert.NotNil(t, res)
+			assert.Equal(t, res.Message, "Password berhasil diubah.")
+
+		} else {
+			log.Printf("Skip testing change password because ENV == %s", os.Getenv("ENV"))
+		}
+
+	})
+
+	t.Run("Login with new password", func(t *testing.T) {
+		req := &pb.LoginWithEmailAndPassRequest{
+			Email:    email,
+			Password: newPass,
+		}
+
+		res, err := client.LoginWithEmailAndPass(context.Background(), req)
+		assert.NoError(t, err)
+		assert.NotNil(t, res)
+		assert.Equal(t, res.Message, "Login successful")
+		assert.NotEmpty(t, res.Token, "Expected a non-empty JWT token")
+		assert.NotEmpty(t, res.RefreshToken, "Expected a non-empty JWT refresh token")
+
+		loginToken = res.Token
 	})
 
 	// t.Run("Remove Test User", func(t *testing.T) {

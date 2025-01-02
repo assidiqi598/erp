@@ -70,8 +70,8 @@ func (s *AuthServer) RequestToChangePassword(
 		"Devmore",
 		user.Email,
 		user.Username,
-		"Verifikasi Email",
-		"Berikut merupakan kode verifikasi email Anda",
+		"Pengubahan Password",
+		"Berikut merupakan kode untuk mengubah password Anda.",
 		emailHTML,
 	)
 
@@ -116,5 +116,11 @@ func (s *AuthServer) RequestToChangePassword(
 		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan dalam update user.")
 	}
 
-	return &pb.RequestToChangePasswordResponse{Message: "Permintaan berhasil diproses, mohon cek email Anda."}, nil
+	msg := "Permintaan berhasil diproses, mohon cek email Anda."
+
+	if os.Getenv("ENV") == "dev" || os.Getenv("ENV") == "" {
+		msg = msg + randomString
+	}
+
+	return &pb.RequestToChangePasswordResponse{Message: msg}, nil
 }

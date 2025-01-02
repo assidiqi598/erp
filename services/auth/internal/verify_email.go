@@ -54,5 +54,5 @@ func (s *AuthServer) VerifyEmail(ctx context.Context, req *pb.VerifyEmailRequest
 		return nil, status.Errorf(codes.Internal, "Error updating user")
 	}
 
-	return &pb.VerifyEmailResponse{Message: "Anda berhasil terverifikasi"}, nil
+	return &pb.VerifyEmailResponse{Message: "Anda berhasil terverifikasi."}, nil
 }

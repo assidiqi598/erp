@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: auth
     environment:
-      - ENV="dev"
+      - ENV=dev
       - AUTH_PORT=${AUTH_PORT}
       - MONGO_URI=${MONGO_URI}
       - DB_NAME=${DB_NAME}

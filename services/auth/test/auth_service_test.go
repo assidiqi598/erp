@@ -72,18 +72,18 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 	var randomString string
 
 	t.Run("Register", func(t *testing.T) {
-		// req := &pb.RegisterRequest{
-		// 	Email:       email,
-		// 	Password:    "password",
-		// 	Username:    "Test User",
-		// 	PhoneNumber: "085925119040",
-		// }
+		req := &pb.RegisterRequest{
+			Email:       email,
+			Password:    "password",
+			Username:    "Test User",
+			PhoneNumber: "085925119040",
+		}
 
-		// res, err := client.Register(context.Background(), req)
-		// assert.NoError(t, err)
-		// assert.NotNil(t, res)
-		// assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon login dan verifikasi dengan token yang telah dikirim.")
-		// assert.NotNil(t, res.UserId)
+		res, err := client.Register(context.Background(), req)
+		assert.NoError(t, err)
+		assert.NotNil(t, res)
+		assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon login dan verifikasi dengan token yang telah dikirim.")
+		assert.NotNil(t, res.UserId)
 
 		// Check database for new user
 		var user bson.M
@@ -144,7 +144,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		res, err := client.VerifyEmail(ctx, req)
 		assert.NoError(t, err)
 		assert.NotNil(t, res)
-		assert.Equal(t, res.Message, "Anda berhasil terverifikasi")
+		assert.Equal(t, res.Message, "Anda berhasil terverifikasi.")
 
 		// Optionally check the database for updated verification status
 		var user bson.M
@@ -212,18 +212,17 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 		loginToken = res.Token
 	})
 
-	// t.Run("Remove Test User", func(t *testing.T) {
-	// 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	// 	defer cancel()
+	t.Run("Remove Test User", func(t *testing.T) {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
 
-	// 	res, err := usersCollection.DeleteOne(ctx, bson.M{"email": email})
-	// 	if err != nil {
-	// 		t.Fatalf("Failed to clean up test user: %v", err)
-	// 	}
+		res, err := usersCollection.DeleteOne(ctx, bson.M{"email": email})
+		if err != nil {
+			t.Fatalf("Failed to clean up test user: %v", err)
+		}
 
-	// 	log.Printf("Cleaned up test user with email: %s", email)
+		log.Printf("Cleaned up test user with email: %s", email)
 
-	// 	assert.Equal(t, 1, int(res.DeletedCount))
-
-	// })
+		assert.Equal(t, 1, int(res.DeletedCount))
+	})
 }

@@ -47,6 +47,11 @@ func main() {
 		log.Fatal("S3_BUCKET_NAME is not set")
 	}
 
+	port := os.Getenv("AUTH_PORT")
+	if port == "" {
+		log.Fatal("AUTH_PORT is not set")
+	}
+
 	// Connect to MongoDB
 	err := db.ConnectMongo(mongoURI)
 	if err != nil {
@@ -65,8 +70,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to create S3 client: %v", err)
 	}
-
-	port := os.Getenv("AUTH_PORT")
 
 	listener, err := net.Listen("tcp", "0.0.0.0:"+port)
 	if err != nil {

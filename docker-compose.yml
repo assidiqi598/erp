@@ -18,6 +18,29 @@ services:
       retries: 5
       start_period: 5s
 
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile.dev
+    container_name: gateway
+    environment:
+      - ENV=dev
+      - GATEWAY_PORT=${GATEWAY_PORT}
+      - AUTH_SERVICE=auth:${AUTH_PORT}
+      - CERT_FILE_MS=${CERT_FILE_MS}
+      - CERT_FILE_GW=${CERT_FILE_GW}
+      - KEY_FILE=${KEY_FILE}
+    ports:
+      - ${GATEWAY_PORT}:${GATEWAY_PORT}
+    volumes:
+      - ./gateway/:/app
+      - /app/tmp/
+    command: air
+    depends_on:
+      - auth
+    networks:
+      - app-network
+
   auth:
     build:
       context: ./services/auth/
@@ -37,7 +60,7 @@ services:
       - S3_ACCESS_KEY=${S3_ACCESS_KEY}
       - S3_SECRET_KEY=${S3_SECRET_KEY}
       - S3_BUCKET_NAME=${S3_BUCKET_NAME}
-      - CERT_FILE=${CERT_FILE}
+      - CERT_FILE=${CERT_FILE_MS}
       - KEY_FILE=${KEY_FILE}
     volumes:
       - ./services/auth/:/app

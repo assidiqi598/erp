@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package gateway;
+
+option go_package = ".";
+
+service GatewayService {
+    rpc LoginWithEmailAndPass (LoginWithEmailAndPassRequest) returns (LoginResponse);
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+    rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
+    rpc ResendVerificationEmail(ResendVerificationEmailRequest) returns (ResendVerificationEmailResponse);
+    rpc RequestToChangePassword(RequestToChangePasswordRequest) returns (RequestToChangePasswordResponse);
+    rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse);
+    rpc ChangeEmail (ChangeEmailRequest) returns (ChangeEmailResponse);
+}
+
+message LoginWithEmailAndPassRequest {
+    string email = 1;
+    string password = 2;
+  }
+  
+  // message LoginWithPhoneNumberRequest {
+  //   string phone_number = 1;
+  // }
+  
+  // message MatchOTPRequest {
+  //   string token = 1;
+  // }
+  
+  // message MatchOTPResponse {
+  //   string message = 1;
+  // }
+  
+  message LoginResponse {
+    string token = 1;
+    string message = 2;
+    string refresh_token = 3;
+  }
+  
+  message RegisterRequest {
+    string username = 1;
+    string password = 2;
+    string email = 3;
+    string phone_number = 4;
+  }
+  
+  message RegisterResponse {
+    string user_id = 1;
+    string message = 2;
+  }
+  
+  message VerifyEmailRequest {
+    string email_token = 1;
+  }
+  
+  message VerifyEmailResponse {
+    string message = 1;
+  }
+  
+  message ResendVerificationEmailRequest {
+    string reserved = 1;
+  }
+  
+  message ResendVerificationEmailResponse {
+    string message = 1;
+  }
+  
+  message RequestToChangePasswordRequest {
+    string email = 1;
+    string phone_number = 2;
+  }
+  
+  message RequestToChangePasswordResponse {
+    string message = 1;
+  }
+  
+  message ChangePasswordRequest {
+    string given_password = 1;
+    string new_password = 2;
+    string email = 3;
+    string phone_number = 4;
+  }
+  
+  message ChangePasswordResponse {
+    string message = 1;
+  }
+  
+  message ChangeEmailRequest {
+    string old_email = 1;
+    string new_email = 2;
+    string password = 3;
+  }
+  
+  message ChangeEmailResponse {
+    string message = 1;
+  }

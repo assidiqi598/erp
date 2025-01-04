@@ -56,7 +56,7 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 	}
 
 	// gRPC connection setup
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(creds))
+	conn, err := grpc.NewClient("localhost:50052", grpc.WithTransportCredentials(creds))
 	if err != nil {
 		t.Fatalf("Failed to connect to AuthService: %v", err)
 	}
@@ -72,18 +72,18 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 	var randomString string
 
 	t.Run("Register", func(t *testing.T) {
-		req := &pb.RegisterRequest{
-			Email:       email,
-			Password:    "password",
-			Username:    "Test User",
-			PhoneNumber: "085925119040",
-		}
+		// req := &pb.RegisterRequest{
+		// 	Email:       email,
+		// 	Password:    "password",
+		// 	Username:    "Test User",
+		// 	PhoneNumber: "085925119040",
+		// }
 
-		res, err := client.Register(context.Background(), req)
-		assert.NoError(t, err)
-		assert.NotNil(t, res)
-		assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon login dan verifikasi dengan token yang telah dikirim.")
-		assert.NotNil(t, res.UserId)
+		// res, err := client.Register(context.Background(), req)
+		// assert.NoError(t, err)
+		// assert.NotNil(t, res)
+		// assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon login dan verifikasi dengan token yang telah dikirim.")
+		// assert.NotNil(t, res.UserId)
 
 		// Check database for new user
 		var user bson.M

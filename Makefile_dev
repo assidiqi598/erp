@@ -80,12 +80,12 @@ generate_cert_ms:
 	fi
 
 # Target to check health of the gRPC server
-check_health_auth: generate_cert_ms compose_up
-	@until grpcurl -v -cacert $(AUTH_DIR)$(CERT_CRT_MS) -d '' localhost:50051 list > /dev/null 2>&1; do \
+check_health_gw: generate_cert_ms compose_up
+	@until grpcurl -v -cacert $(GATEWAY_DIR)$(CERT_CRT_GW) -d '' localhost:50052 list > /dev/null 2>&1; do \
 		echo "Waiting for gRPC server..."; \
 		sleep 2; \
 	done
 	@echo "gRPC server is ready."
 
-test_auth: check_health_auth
-	cd services/auth && go test ./test/... -v
+test_auth: check_health_gw
+	cd shared && go test ./test/... -v

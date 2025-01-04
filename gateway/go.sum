@@ -1,5 +1,5 @@
-github.com/assidiqi598/erp/services/auth v0.0.0-20250103095931-0f7196dcc73b h1:XEfbdxw8bShUBJVtlHVmbfPHnz9oCFBEtfZFbJvPQjw=
-github.com/assidiqi598/erp/services/auth v0.0.0-20250103095931-0f7196dcc73b/go.mod h1:v1cVKQw2pAKQ+RLLArcmW1zEWl4qlGGLJip6e+tb+p0=
+github.com/assidiqi598/erp/services/auth v0.0.0-20250104100456-5ef2736f6481 h1:Z95RFCPhdpv82pmmCER7x4g5uH4GwMX2hrHoEh9+ic8=
+github.com/assidiqi598/erp/services/auth v0.0.0-20250104100456-5ef2736f6481/go.mod h1:v1cVKQw2pAKQ+RLLArcmW1zEWl4qlGGLJip6e+tb+p0=
 github.com/go-logr/logr v1.4.2 h1:6pFjapn8bFcIbiKo3XT4j/BhANplGihG6tvd+8rYgrY=
 github.com/go-logr/logr v1.4.2/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
 github.com/go-logr/stdr v1.2.2 h1:hSWxHoqTgW2S2qGc0LTAI563KZ5YKYRhT3MFKZMbjag=

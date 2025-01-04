@@ -3,7 +3,7 @@ module github.com/assidiqi598/erp/gateway
 go 1.23.4
 
 require (
-	github.com/assidiqi598/erp/services/auth v0.0.0-20250103095931-0f7196dcc73b
+	github.com/assidiqi598/erp/services/auth v0.0.0-20250104100456-5ef2736f6481
 	google.golang.org/grpc v1.69.2
 	google.golang.org/protobuf v1.36.1
 )

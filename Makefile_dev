@@ -4,6 +4,7 @@ AUTH_DIR := ./services/auth/
 GATEWAY_DIR := ./gateway/
 FLUTTER_DIR := ../erp_app/
 FLUTTER_ASSETS := assets/
+TEST_DIR := ./shared/test/
 
 CERT_DIR := certs/
 CERT_KEY := $(CERT_DIR)server.key
@@ -21,17 +22,11 @@ setup_grpc_auth:
 		--go_out=$(PROTO_SRC_DIR_AUTH) \
 		--go-grpc_out=$(PROTO_SRC_DIR_AUTH) \
 		$(PROTO_SRC_DIR_AUTH)auth.proto
-
-setup_grpc_gateway:
+	@mkdir -p $(PROTO_FLUTTER_OUT_DIR)auth
 	@protoc \
-		--proto_path=$(PROTO_SRC_DIR_GATEWAY) \
-		--go_out=$(PROTO_SRC_DIR_GATEWAY) \
-		--go-grpc_out=$(PROTO_SRC_DIR_GATEWAY) \
-		$(PROTO_SRC_DIR_GATEWAY)gateway.proto
-	@protoc \
-		--proto_path=$(PROTO_SRC_DIR_GATEWAY) \
-		--dart_out=grpc:$(PROTO_FLUTTER_OUT_DIR) \
-		$(PROTO_SRC_DIR_GATEWAY)gateway.proto
+		--proto_path=$(PROTO_SRC_DIR_AUTH) \
+		--dart_out=grpc:$(PROTO_FLUTTER_OUT_DIR)auth \
+		$(PROTO_SRC_DIR_AUTH)auth.proto
 
 compose_up:
 	@if ! docker ps | grep -q "auth"; then \
@@ -60,6 +55,9 @@ generate_cert_gw:
 		mkdir -p $(FLUTTER_DIR)$(FLUTTER_ASSETS)$(CERT_DIR); \
 		cp $(GATEWAY_DIR)$(CERT_CRT_GW) $(FLUTTER_DIR)$(FLUTTER_ASSETS)$(CERT_CRT_GW); \
 		echo "Certificate copied to $(FLUTTER_DIR)$(FLUTTER_ASSETS)$(CERT_CRT_GW)"; \
+		mkdir -p $(TEST_DIR)$(CERT_DIR); \
+		cp $(GATEWAY_DIR)$(CERT_CRT_GW) $(TEST_DIR)$(CERT_CRT_GW); \
+		echo "Certificate copied to $(TEST_DIR)$(CERT_CRT_GW)"; \
 	fi
 
 generate_cert_ms:
@@ -80,7 +78,7 @@ generate_cert_ms:
 	fi
 
 # Target to check health of the gRPC server
-check_health_gw: generate_cert_ms compose_up
+check_health_gw: generate_cert_ms generate_cert_gw compose_up
 	@until grpcurl -v -cacert $(GATEWAY_DIR)$(CERT_CRT_GW) -d '' localhost:50052 list > /dev/null 2>&1; do \
 		echo "Waiting for gRPC server..."; \
 		sleep 2; \

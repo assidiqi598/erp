@@ -6,7 +6,7 @@ import (
 	"time"
 
 	pb "github.com/assidiqi598/erp/services/auth/proto"
-	public "github.com/assidiqi598/erp/services/auth/public"
+	"github.com/assidiqi598/erp/shared/auth"
 	"github.com/assidiqi598/erp/shared/repositories"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -34,13 +34,13 @@ func (s *AuthServer) LoginWithEmailAndPass(ctx context.Context, req *pb.LoginWit
 	}
 
 	// Generate tokens
-	accessToken, err := public.GenerateJWT(user.ID, user.Email, user.PhoneNumber, time.Minute*60)
+	accessToken, err := auth.GenerateJWT(user.ID, user.Email, user.PhoneNumber, time.Minute*60)
 	if err != nil {
 		log.Printf("Error generating access token: %v", err)
 		return nil, status.Errorf(codes.Internal, "Failed to generate access token")
 	}
 
-	refreshToken, err := public.GenerateJWT(user.ID, user.Email, user.PhoneNumber, time.Hour*24)
+	refreshToken, err := auth.GenerateJWT(user.ID, user.Email, user.PhoneNumber, time.Hour*24)
 	if err != nil {
 		log.Printf("Error generating refresh token: %v", err)
 		return nil, status.Errorf(codes.Internal, "Failed to generate refresh token")

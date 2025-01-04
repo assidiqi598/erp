@@ -35,7 +35,7 @@ func main() {
 	authClient := authpb.NewAuthServiceClient(authConn)
 
 	// Start the gRPC Gateway Server
-	server := grpc.NewServer(grpc.Creds(gatewayCreds))
+	server := grpc.NewServer(grpc.Creds(gatewayCreds), grpc.UnaryInterceptor(internal.ForwardMetadataInterceptor()))
 	authpb.RegisterAuthServiceServer(server, internal.NewAuthHandler(authClient))
 
 	listener, err := net.Listen("tcp", "0.0.0.0:"+os.Getenv("GATEWAY_PORT"))

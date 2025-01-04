@@ -31,7 +31,6 @@ func TestMain(m *testing.M) {
 }
 
 func TestAuthServiceE2EWithDB(t *testing.T) {
-
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -72,18 +71,18 @@ func TestAuthServiceE2EWithDB(t *testing.T) {
 	var randomString string
 
 	t.Run("Register", func(t *testing.T) {
-		// req := &pb.RegisterRequest{
-		// 	Email:       email,
-		// 	Password:    "password",
-		// 	Username:    "Test User",
-		// 	PhoneNumber: "085925119040",
-		// }
+		req := &pb.RegisterRequest{
+			Email:       email,
+			Password:    "password",
+			Username:    "Test User",
+			PhoneNumber: "085925119040",
+		}
 
-		// res, err := client.Register(context.Background(), req)
-		// assert.NoError(t, err)
-		// assert.NotNil(t, res)
-		// assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon login dan verifikasi dengan token yang telah dikirim.")
-		// assert.NotNil(t, res.UserId)
+		res, err := client.Register(context.Background(), req)
+		assert.NoError(t, err)
+		assert.NotNil(t, res)
+		assert.Equal(t, res.Message, "Anda berhasil terdaftar, mohon login dan verifikasi dengan token yang telah dikirim.")
+		assert.NotNil(t, res.UserId)
 
 		// Check database for new user
 		var user bson.M

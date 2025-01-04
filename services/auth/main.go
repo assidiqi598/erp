@@ -8,7 +8,7 @@ import (
 
 	"github.com/assidiqi598/erp/services/auth/internal"
 	pb "github.com/assidiqi598/erp/services/auth/proto"
-	"github.com/assidiqi598/erp/services/auth/public"
+	"github.com/assidiqi598/erp/shared/auth"
 	"github.com/assidiqi598/erp/shared/db"
 	"github.com/assidiqi598/erp/shared/storage"
 	"google.golang.org/grpc"
@@ -82,7 +82,7 @@ func main() {
 		log.Fatalf("failed to load TLS certificates: %v", err)
 	}
 
-	grpcServer := grpc.NewServer(grpc.Creds(creds), grpc.UnaryInterceptor(public.JwtAuthInterceptor))
+	grpcServer := grpc.NewServer(grpc.Creds(creds), grpc.UnaryInterceptor(auth.JwtAuthInterceptor))
 	pb.RegisterAuthServiceServer(grpcServer, &internal.AuthServer{})
 
 	// Enable gRPC reflection

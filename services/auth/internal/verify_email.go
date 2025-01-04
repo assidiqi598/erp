@@ -5,7 +5,7 @@ import (
 	"log"
 
 	pb "github.com/assidiqi598/erp/services/auth/proto"
-	public "github.com/assidiqi598/erp/services/auth/public"
+	"github.com/assidiqi598/erp/shared/auth"
 	"github.com/assidiqi598/erp/shared/repositories"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -15,7 +15,7 @@ import (
 
 func (s *AuthServer) VerifyEmail(ctx context.Context, req *pb.VerifyEmailRequest) (*pb.VerifyEmailResponse, error) {
 	// Retrieve claims from the context
-	claims, ok := ctx.Value(public.ClaimsKey).(*public.Claims)
+	claims, ok := ctx.Value(auth.ClaimsKey).(*auth.Claims)
 	if !ok {
 		log.Println("Failed to retrieve claims from context")
 	}

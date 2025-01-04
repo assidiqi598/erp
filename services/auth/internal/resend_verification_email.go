@@ -6,7 +6,7 @@ import (
 	"os"
 
 	pb "github.com/assidiqi598/erp/services/auth/proto"
-	"github.com/assidiqi598/erp/services/auth/public"
+	"github.com/assidiqi598/erp/shared/auth"
 	"github.com/assidiqi598/erp/shared/repositories"
 	"github.com/assidiqi598/erp/shared/storage"
 	"github.com/assidiqi598/erp/shared/utils"
@@ -21,7 +21,7 @@ func (s *AuthServer) ResendVerificationEmail(
 	req *pb.ResendVerificationEmailRequest,
 ) (*pb.ResendVerificationEmailResponse, error) {
 	// Retrieve claims from the context
-	claims, ok := ctx.Value(public.ClaimsKey).(*public.Claims)
+	claims, ok := ctx.Value(auth.ClaimsKey).(*auth.Claims)
 	if !ok {
 		log.Println("Failed to retrieve claims from context")
 		return nil, status.Errorf(codes.Internal, "Gagal mengidentifikasi request.")

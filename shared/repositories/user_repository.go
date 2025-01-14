@@ -8,22 +8,26 @@ import (
 
 	"github.com/assidiqi598/erp/shared/db"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type User struct {
-	ID                string    `bson:"_id,omitempty"`
-	Username          string    `bson:"username"`
-	Password          string    `bson:"password"`
-	GivenPassword     string    `bson:"given_password"`
-	Email             string    `bson:"email"`
-	PhoneNumber       string    `bson:"phone_number"`
-	IsVerified        bool      `bson:"is_verified"`
-	EmailToken        string    `bson:"email_token"`
-	VerificationMsgID string    `bson:"verification_msg_id"`
-	ChangePassMsgID   string    `bson:"change_pass_msg_id"`
-	LastLogin         time.Time `bson:"last_login"`
-	CreatedAt         time.Time `bson:"created_at"`
+	ID                primitive.ObjectID `bson:"_id,omitempty"`
+	Username          string             `bson:"username"`
+	Password          string             `bson:"password"`
+	GivenPassword     string             `bson:"given_password"`
+	Email             string             `bson:"email"`
+	PhoneNumber       string             `bson:"phone_number"`
+	CompanyID         primitive.ObjectID `bson:"company_id"`
+	RoleID            primitive.ObjectID `bson:"role_id"`
+	IsVerified        bool               `bson:"is_verified"`
+	EmailToken        string             `bson:"email_token"`
+	VerificationMsgID string             `bson:"verification_msg_id"`
+	ChangePassMsgID   string             `bson:"change_pass_msg_id"`
+	LastLogin         time.Time          `bson:"last_login"`
+	CreatedAt         time.Time          `bson:"created_at"`
+	UpdatedAt         time.Time          `bson:"updated_at"`
 }
 
 // UserRepository provides methods for user-related database operations

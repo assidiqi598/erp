@@ -2,6 +2,8 @@ github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwc
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/assidiqi598/erp/shared v0.0.0-20250104114956-7eeee864581a h1:yeKsGDgqce3GL3pAzwxdmi6OVMzQO1NV1oftxPZN2k0=
 github.com/assidiqi598/erp/shared v0.0.0-20250104114956-7eeee864581a/go.mod h1:iuSS/oMdkA+2h+o0Wm+G8oS5FZlpKq9MKH4box0jWmI=
+github.com/assidiqi598/erp/shared v0.0.0-20250114151110-189c5978ffd8 h1:0B5HLDQh52qKHwjBmX5HODBjnwAAkuUQAJyPA75CxCE=
+github.com/assidiqi598/erp/shared v0.0.0-20250114151110-189c5978ffd8/go.mod h1:iuSS/oMdkA+2h+o0Wm+G8oS5FZlpKq9MKH4box0jWmI=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkpeCY=

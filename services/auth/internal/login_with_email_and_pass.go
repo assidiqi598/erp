@@ -9,7 +9,6 @@ import (
 	"github.com/assidiqi598/erp/shared/auth"
 	"github.com/assidiqi598/erp/shared/repositories"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -34,27 +33,21 @@ func (s *AuthServer) LoginWithEmailAndPass(ctx context.Context, req *pb.LoginWit
 	}
 
 	// Generate tokens
-	accessToken, err := auth.GenerateJWT(user.ID, user.Email, user.PhoneNumber, time.Minute*60)
+	accessToken, err := auth.GenerateJWT(user.ID.Hex(), user.Email, user.PhoneNumber, time.Minute*60)
 	if err != nil {
 		log.Printf("Error generating access token: %v", err)
 		return nil, status.Errorf(codes.Internal, "Failed to generate access token")
 	}
 
-	refreshToken, err := auth.GenerateJWT(user.ID, user.Email, user.PhoneNumber, time.Hour*24)
+	refreshToken, err := auth.GenerateJWT(user.ID.Hex(), user.Email, user.PhoneNumber, time.Hour*24)
 	if err != nil {
 		log.Printf("Error generating refresh token: %v", err)
 		return nil, status.Errorf(codes.Internal, "Failed to generate refresh token")
 	}
 
-	objectID, err := primitive.ObjectIDFromHex(user.ID)
-
-	if err != nil {
-		log.Printf("Error converting id: %v", err)
-	}
-
 	err = repo.UpdateUser(
 		context.Background(),
-		bson.M{"_id": objectID},
+		bson.M{"_id": user.ID},
 		bson.M{
 			"$set": bson.M{
 				"last_login": time.Now(),

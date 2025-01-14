@@ -3,7 +3,7 @@ module github.com/assidiqi598/erp/services/auth
 go 1.23.4
 
 require (
-	github.com/assidiqi598/erp/shared v0.0.0-20250104114956-7eeee864581a
+	github.com/assidiqi598/erp/shared v0.0.0-20250114151110-189c5978ffd8
 	go.mongodb.org/mongo-driver v1.17.1
 	golang.org/x/crypto v0.31.0
 	google.golang.org/grpc v1.69.2

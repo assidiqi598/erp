@@ -9,7 +9,6 @@ import (
 	pb "github.com/assidiqi598/erp/services/auth/proto"
 	"github.com/assidiqi598/erp/shared/repositories"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -52,16 +51,9 @@ func (s *AuthServer) ChangePassword(ctx context.Context, req *pb.ChangePasswordR
 		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan hashing password.")
 	}
 
-	userObjectID, err := primitive.ObjectIDFromHex(user.ID)
-
-	if err != nil {
-		log.Printf("Error converting id: %v", err)
-		return nil, status.Errorf(codes.Internal, "Terjadi kesalahan konversi ID.")
-	}
-
 	err = repo.UpdateUser(
 		context.Background(),
-		bson.M{"_id": userObjectID},
+		bson.M{"_id": user.ID},
 		bson.M{
 			"$set": bson.M{
 				"password":       newHashedPassword,

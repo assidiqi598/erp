@@ -86,4 +86,4 @@ check_health_gw: generate_cert_ms generate_cert_gw compose_up
 	@echo "gRPC server is ready."
 
 test_auth: check_health_gw
-	cd shared && go test ./test/... -v
+	cd shared && go clean -testcache && go test ./test/... -v
